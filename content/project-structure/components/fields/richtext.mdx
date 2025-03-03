@@ -1,0 +1,50 @@
+import Image from "next/image";
+
+# Rich Text
+
+```tsx
+import { BlocksContent, BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: BlocksContent
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: { type: "richtext", label: "My Field Name" },
+  },
+  defaultProps: {
+    richtext: [
+      {
+        type: 'paragraph',
+        children: [{ type: "text", text: 'The quick brown fox jumps over the lazy red dog.' }],
+      },
+    ],
+  },
+  label: "My Component",
+  render: (props) => {
+    return <BlocksRenderer content={props.richtext} />
+  }
+}
+```
+The Rich Text field uses the same underlying libriaries as the new Strapi Rich Text Editor. It allows for the creation of rich text content with a variety of formatting options.
+
+Using the `BlocksRenderer` component from [@strapi/blocks-react-renderer](https://www.npmjs.com/package/@strapi/blocks-react-renderer) allows for the rendering of the rich text content in the editor.
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `richtext` | true |
+| `label` | The label for the field in the editor. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_richtext.png"
+  alt="Page Builder"
+  width={305}
+  height={152}
+/>

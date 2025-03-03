@@ -1,0 +1,41 @@
+import Image from "next/image";
+
+# Textarea
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: { type: "textarea", label: "My Field Name" },
+  },
+  defaultProps: {
+    myFieldName: "The quick brown fox jumps over the lazy red dog.",
+  },
+  label: "My Component",
+  render: (props) => {
+    return <p>{props.myFieldName}</p>
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `textarea` | true |
+| `label` | The label for the field in the editor. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_textarea.png"
+  alt="Page Builder"
+  width={305}
+  height={181}
+/>

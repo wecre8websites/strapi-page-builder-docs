@@ -1,0 +1,57 @@
+import Image from "next/image";
+
+# Custom
+
+```tsx
+import { ComponentConfig, FieldLabel } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "custom",
+      label: "My Field Name",
+      render: ({ field, name, onChange, value }) => {
+        return <FieldLabel label={field.label || name} icon={<>i</>}>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="Enter some text"
+            className="w-full py-2 px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </FieldLabel>
+      },
+    },
+  },
+  defaultProps: {
+    myFieldName: "",
+  },
+  render: (props) => {
+    return <p>{props.myFieldName}</p>
+  }
+}
+```
+
+Custom fields allow the creation of fields that are not covered by the default field types. The `render` function is used to define the JSX for the field. You may use the `FieldLabel` component to provide a `label` and optional `icon` for the field.
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `label` | The label for the field in the editor. | false |
+| `render` | A function that returns the JSX for the field. | true |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_custom.png"
+  alt="Page Builder"
+  width={309}
+  height={100}
+/>

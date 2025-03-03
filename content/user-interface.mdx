@@ -1,0 +1,168 @@
+import Image from "next/image";
+
+# Interface
+<br/><br/>
+<Image
+  src="/pagebuilder_interface.png"
+  alt="Page Builder"
+  width={918}
+  height={655}
+/>
+
+## Content selection
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    1. Content type: Select the Strapi content-type. Only content-types configured with
+    the `page-builder` template relation field will be available. See [Manual
+    Installation](/manual-installation) for more information.
+    2. Template: Select the active template in the editor or create a new one.
+    3. Preview content: Select the CMS content to preview in the editor. Content will be available for dynamic substitutions using Handlebars syntax. Click on the `</>` icon to see the data contained within.
+    4. Locale: Select the locale to preview the content in. When a locale other than the default is selected, page structure cannot be modified, only the content. Localized content is saved to a localized template.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_content_selection.png"
+      alt="Page Builder"
+      width={413}
+      height={51}
+    />
+  </div>
+</div>
+
+## Preview controls
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    1. Viewport selection: Toggle between mobile, table and desktop views. 2.
+    Zoom in/out: Increase or decrease the zoom level. 3. Zoom select: Select the
+    zoom level.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_preview_controls.png"
+      alt="Page Builder"
+      width={312}
+      height={44}
+    />
+  </div>
+</div>
+
+## Sidebar toggles
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    Toggle visibility of the Page Builder sidebars.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_sidebar_toggle.png"
+      alt="Page Builder"
+      width={89}
+      height={42}
+    />
+  </div>
+</div>
+
+## Undo and redo
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    Undo or redo last actions. Actions are held in memory until the page is
+    reloaded.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_undo_redo.png"
+      alt="Page Builder"
+      width={89}
+      height={50}
+    />
+  </div>
+</div>
+
+## Save
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    Save your changes. **Note** that Page Builder templates do not use the Save
+    and Publish feature. Template visibilty is managed by the assigned template
+    on the content-type.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_save.png"
+      alt="Page Builder"
+      width={101}
+      height={51}
+    />
+  </div>
+</div>
+
+## Preview Pane
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    Preview of the current template layout.  Components can be selected by clicing on them and reordered by dragging.
+  </div>
+  <div className="relative flex-grow flex-shrink flex justify-end">
+    <Image
+      src="/pagebuilder_preview_pane.png"
+      alt="Page Builder"
+      width={1155}
+      height={513}
+    />
+  </div>
+</div>
+
+## Component Selection
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    Components are added to the page by dragging and dropping from the sidebar.
+    
+    Components can be grouped by category to simplify selection. See [Component Configuration](/project-structure) for more information.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_component_selection.png"
+      alt="Page Builder"
+      width={182}
+      height={373}
+    />
+  </div>
+</div>
+
+## Component Controls
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    When a component is selected, an outline and overlay will appear in the preview pane and a control header will appear above allowing for duplication or deletion of the selected component.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_component_controls.png"
+      alt="Page Builder"
+      width={232}
+      height={45}
+    />
+  </div>
+</div>
+
+## Component Settings
+
+<div className="flex justify-between items-center w-full gap-2 py-4">
+  <div className="flex-grow flex-shrink">
+    When a component is selected, the settings panel will appear on the right side of the editor. Here you can configure the component's properties.
+    
+    Available component properties are defined by it's configuration. See [Component Configuration](/project-structure) for more information.
+  </div>
+  <div className="relative flex-grow flex-shrink-0 flex justify-end">
+    <Image
+      src="/pagebuilder_component_settings.png"
+      alt="Page Builder"
+      width={177}
+      height={534}
+    />
+  </div>
+</div>

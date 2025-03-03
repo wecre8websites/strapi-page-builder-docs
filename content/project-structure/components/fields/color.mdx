@@ -1,0 +1,44 @@
+import Image from "next/image";
+
+# Color
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "color",
+      label: "My Field Name",
+    },
+  },
+  defaultProps: {
+    myFieldName: "#000000",
+  },
+  label: "My Component",
+  render: (props) => {
+    return <div style={{ background: props.myFieldName }} />
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `label` | The label for the field in the editor. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_color.png"
+  alt="Page Builder"
+  width={312}
+  height={331}
+/>

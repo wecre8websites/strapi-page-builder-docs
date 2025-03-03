@@ -1,0 +1,107 @@
+# Editor Configuration
+
+Page builder requires a configuration object to define the components available for use in the editor. The configuration object is a JSON object that defines the components available for use in the editor. The configuration object is passed to the `Editor` component as a prop.
+
+At it's most basic, the configuration object defines the components available for use in the editor. Each component is defined by a key-value pair where the key is the component name and the value is the component configuration object.
+
+A simple configuration object might look like this:
+```tsx filename="src/blocks/config.tsx" copy
+import { Config } from "@wecre8websites/strapi-page-builder-react";
+
+interface Blocks = {
+  TextComponent: { text: string },
+}
+
+export config: Config<Blocks, {}, "basic" | "other"> = {
+  components: {
+    TextComponent: {
+      fields: {
+        text: { type: "text" },
+      },
+      defaultProps: {
+        text: "Visually editable text",
+      },
+      render: (data) => <div style={{ padding:"6rem" }}>{ data.text }</div>
+    },
+  },
+  root: {}
+}
+```
+
+## Components
+
+The `components` object is a key-value pair where the key is the component name and the value is the component configuration object. The component configuration object defines the fields available for editing in the editor, the default props for the component, and the render function that defines how the component is rendered in the editor.
+
+### Fields
+
+The `fields` object defines the fields available for editing in the editor. Each field is defined by a key-value pair where the key is the field name and the value is the field configuration object. The field configuration object defines the type of the field and any additional properties.
+
+See the [Field Types](/field-types) guide for more information on the available field types.
+
+### Default Props
+
+The `defaultProps` object defines the default values for the component. The default props are used when the component is first added to the editor.
+
+### Render Function
+
+The `render` function defines how the component is rendered in the `<Editor/>` and in the `<Render/>` components. The render function is a React component that takes the component data as a prop and returns the JSX to render the component.
+
+Below is the configuration object from [@wecre8websites/strapi-page-builder-react](https://www.npmjs.com/package/@wecre8websites/strapi-page-builder-react) used in the [Quick Start](/quick-start) guide:
+```tsx filename="src/blocks/config.tsx" copy
+'use client'
+import { Config } from "@wecre8websites/strapi-page-builder-react";
+import { CategoriesConfig } from "./Categories/config";
+import { FeaturedCategoryConfig } from "./FeaturedCategory/config";
+import { FeaturedProductsConfig } from "./FeaturedProducts/config";
+import { TestimonialGridConfig } from "./TestimonialGrid/config";
+import { TestimonialItemProps } from "./TestimonialItem/component";
+import { TestimonialItemConfig } from "./TestimonialItem/config";
+import { RootProps } from "./Root/component";
+import { RootConfig } from "./Root/config";
+import { HeroProps } from "./Hero/component.client";
+import { HeroConfig } from "./Hero/config";
+import { TestimonialGridProps } from "./TestimonialGrid/component";
+import { FeaturedProductsProps } from "./FeaturedProducts/component";
+import { CategoriesProps } from "./Categories/component";
+import { FeaturedCategoryProps } from "./FeaturedCategory/component";
+
+type PageBuilderBlocks = {
+  Hero: HeroProps,
+  FeaturedProducts: FeaturedProductsProps,
+  Categories: CategoriesProps,
+  FeaturedCategory: FeaturedCategoryProps,
+  TestimonialGrid: TestimonialGridProps,
+  TestimonialItem: TestimonialItemProps,
+}
+
+type Categories = "heros" | "features" | "testimonials";
+
+const config: Config<PageBuilderBlocks, RootProps, Categories> = {
+  components: {
+    Hero: HeroConfig,
+    FeaturedProducts: FeaturedProductsConfig,
+    Categories: CategoriesConfig,
+    FeaturedCategory: FeaturedCategoryConfig,
+    TestimonialGrid: TestimonialGridConfig,
+    TestimonialItem: TestimonialItemConfig
+  },
+  categories: {
+    heros: { title: "Heros", components: ["Hero"] },
+    features: { title: "Features", components: ["FeaturedProducts", "Categories", "FeaturedCategory"] },
+    testimonials: { title: "Testimonials", components: ["TestimonialGrid", "TestimonialItem"] }
+  },
+  root: RootConfig
+}
+
+export default config;
+```
+
+In the above configuration, components and their configurations are split out into seperate modules. This allows isolation of client and server rendering for supported components and makes it easier to maintain as your site grows. Visit the [Page Builder Demo Github page](https://github.com/wecre8websites/strapi-page-builder-demo) to see the full implementation.
+
+## Categories
+
+The `categories` object defines the categories available for grouping components in the editor. Each category is defined by a key-value pair where the key is the category name and the value is an object containing the category title and the components assigned to it.
+
+## Root
+
+The `root` object is a special component that wraps all other components in the editor. The root component differs from a standard one in that it must contain `children` as a prop. Defining the `root` object is optional. A default object will be defined if the value is not provided.

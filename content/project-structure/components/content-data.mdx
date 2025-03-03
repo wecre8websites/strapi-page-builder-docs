@@ -1,0 +1,71 @@
+import Image from "next/image";
+
+# Content Data
+
+Within the Page Builder editor, the selected content is fed into the `<Editor/>` component and can be accessed and rendered using `Handlebars` syntax.
+
+Rendering with `Handlebars` is an optional feature and may not be required for all projects. It allows for the assignment of a single template to multiple Strapi content entries and dynamically renders the underlying data within the defined template. The provided external data can be used however is required for your project or ignored completely.
+
+[Handlebars](https://www.npmjs.com/package/handlebars) is a peer dependecy of `@wecre8websites/strapi-page-builder-react` and must be installed separately if `processProps` is used.
+
+The selected content data can viewed in the editor by clicking on the `</>` icon in the [Content Selection](/user-interface#content-selection) section of the header.
+
+For example, accessing the page `title` field would be done like so:
+
+```handlebars
+{{title}}
+```
+<br/>
+<Image
+  src="/pagebuilder_external_data.png"
+  alt="Page Builder"
+  width={631}
+  height={160}
+/>
+
+## Component Configuration
+
+In order to render handlebars content, the external data and targeted props must be fed into the `processProps` helper function.
+
+```tsx
+import { ComponentConfig, FieldLabel, processProps } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "text",
+      label: "My Field Name",
+    },
+  },
+  defaultProps: {
+    myFieldName: "",
+  },
+  render: ({ puck: { metadata }, ...props }) => {
+    const { myFieldName } = processProps(props, metadata);
+    return <p>{myFieldName}</p>
+  }
+}
+```
+
+## Render
+
+The `<Render/>` component does not fetch external data by itself and if used, must be provided to the component as a prop.
+
+```tsx
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const { template, ...content } = await getCMSContent(locale)
+  if (!template?.json || !content) return notFound();
+  return <Render
+    config={config}
+    data={{
+      templateJson: template.json,
+      content
+    }}
+    strapi={{ ...strapiConfig, locale }} />;
+}
+```

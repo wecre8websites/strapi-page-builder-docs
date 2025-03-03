@@ -1,0 +1,58 @@
+import Image from "next/image";
+
+# Strapi
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+import { Product } from "../../types/Product";
+
+export interface MyComponentProps {
+  myFieldName: Product | null;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "strapi",
+      contentType: "api::product.product",
+      titleField: "title",
+      label: "My Field Name",
+      populate: [
+        "populate[0]=localizations",
+        "populate[1]=media"
+      ]
+    },
+  },
+  defaultProps: {
+    myFieldName: null,
+  },
+  label: "My Component",
+  render: (props) => {
+    return <pre>
+      {JSON.stringify(props.myFieldName || "{}", null, 2)}
+    </pre>
+  }
+}
+```
+
+This field allows the selection of a Strapi content entry as defined by the `contentType` field. For content-types that do not have a user-friendly title field defined, the optional `titleField` parameter can be used to specify the field to use as the title.
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `contentType` | The Strapi content type to use. | true |
+| `titleField` | The content field to use as the title. | false |
+| `populate` | An array of strings to use as the populate query parameter. Defaults to `populate=*`. | false |
+| `label` | The label for the field in the editor. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_strapi.png"
+  alt="Page Builder"
+  width={300}
+  height={332}
+/>

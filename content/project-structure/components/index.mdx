@@ -1,0 +1,71 @@
+# Component basics
+
+### Component file
+
+```tsx filename="src/blocks/Text/TextComponent.tsx" copy
+import { FC } from 'react';
+import { DefaultComponentProps } from '@wecre8websites/strapi-page-builder-react';
+
+export interface TextProps extends DefaultComponentProps {
+  text: string
+}
+
+export const TextComponent: FC<TextProps> = ({ puck: { metadata }, ...props }) => {
+  const { text } = props
+  return <p>{data.text}</p>
+}
+```
+
+### Component configuration
+
+```tsx filename="src/blocks/Text/TextConfig.tsx" copy
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+import { TextComponent, TextProps } from "./TextComponent";
+
+export const TextConfig: ComponentConfig<TextProps> = {
+  fields: {
+    text: { type: "text" },
+  },
+  defaultProps: {
+    text: "Visually editable text",
+  },
+  render: (data) => <TextComponent {...data} />
+}
+```
+
+### Global configuration
+
+Now that the component is organised into modules, the config file looks like this
+
+```tsx filename="src/blocks/config.tsx" copy
+import { Config, DefaultRootProps } from "@wecre8websites/strapi-page-builder-react";
+import { TextConfig } from "./Text/TextConfig";
+import { TextComponent, TextProps } from "./Text/TextComponent";
+
+interface RootProps extends DefaultRootProps {}
+
+interface Blocks {
+  Text: TextProps
+}
+
+const config: Config<Blocks, RootProps> = {
+  components: {
+    Text: TextConfig,
+  },
+  root: { }
+}
+
+export default config;
+```
+
+## Component Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `label`                   | Friendly name to identify the component within the visual editor     | FALSE |
+| [`fields`](/project-structure/components/fields)                 | Field definitions for the visual editor                              | FALSE |
+| `defaultProps`     | Default values pre-populated when adding the component to the editor | FALSE |
+| `inline`                 | Removes the wrapper component for use with advanced CSS layouts      | FALSE |
+| [`resolveFields()`](/project-structure/components/resolveFields) | Dynamically update the fields available on the component             | FALSE |
+| [`resolveData()`](/project-structure/components/resolveData)     | Dynamically update the values on the component                       | FALSE |
+| [`render()`](/project-structure/components/render)               | Final React component to be rendered                                 | TRUE  |

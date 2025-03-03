@@ -1,0 +1,62 @@
+import Image from "next/image";
+
+# Media
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+import Image from "next/image";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "media",
+      mediaType: "image",
+      label: "My Field Name",
+    },
+  },
+  defaultProps: {
+    myFieldName: "",
+  },
+  label: "My Component",
+  render: (props) => {
+    return <div className="relative w-48 h-48">
+      {props.myFieldName
+        ? <Image src={process.env.NEXT_PUBLIC_IMAGE_URL + props.myFieldName} layout="fill" objectFit="cover" alt="" />
+        : null}
+    </div>
+  }
+}
+```
+
+This field leverages the Strapi Upload plugin (now built in to Strapi 5) to allow the user to select an image from the media library.
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `mediaType` | The type of media to allow. Can be `audio`, `file`, `image`, `video`, `all`  | true |
+| `label` | The label for the field in the editor. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_media.png"
+  alt="Page Builder"
+  width={274}
+  height={126}
+/>
+
+### Media Select Dialog
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_media_select.png"
+  alt="Page Builder"
+  width={846}
+  height={848}
+/>

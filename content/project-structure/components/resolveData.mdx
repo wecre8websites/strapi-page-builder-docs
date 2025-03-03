@@ -1,0 +1,51 @@
+# Resolve Data
+
+Used to resolve external data and perform advanced logic. This method is called after `resolveFields` and before `render`.
+
+Useful for fetching data from an external API, transforming data, or performing calculations. Can also be used for Strapi content types that do not respect the standard Strapi Content API structure.
+
+**IMPORTANT** The example shown here uses the `strapi` field type which has it's own resolveData function. By defining a custom resolveData function on this component, the built-in one is overwritten and will not be called.
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  menu: { menuItems: { path: string, title: string }[] } | null
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    menu: {
+      type: "strapi",
+      label: "Main menu",
+      contentType: "plugin::navigation.navigation",
+      titleField: "name",
+    }
+  },
+  defaultProps: {
+    menu: null,
+  },
+  resolveData: async (data: any, { metadata }: any) => {
+    const locale = metadata?.locale;
+    const documentId = data?.props?.menu?.documentId;
+    if (!documentId) return data;
+    const menu = await fetch(`${process.env.NEXT_PUBLIC_API_URL as string}/navigation/render/${documentId}?type=TREE${locale ? `&locale=${locale}` : ""}`);
+    const menuJson = await menu.json();
+    return {
+      ...data,
+      props: {
+        ...data.props,
+        menu: {
+          ...data.props.menu,
+          menuItems: menuJson
+        }
+      }
+    }
+  },
+  render: (props) => <ul>
+    {props.menu?.menuItems?.map((item, index) => (
+      <li key={index}><a href={item.path}>{item.title}</a></li>
+    ))}
+  </ul>,
+}
+```

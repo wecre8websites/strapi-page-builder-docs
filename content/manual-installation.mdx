@@ -1,0 +1,149 @@
+import Image from "next/image";
+
+# Manual Installation
+
+## Sign up
+If you don't already have one, visit the [Page Builder sign-up page](https://pagebuilder.wc8.io) to sign up for a free development account and get your API key; it will be needed in the next steps.
+
+## Strapi
+
+### Install the Page Builder plugin for strapi
+
+From the terminal within your Strapi project, run
+
+```bash copy
+npm install @wecre8websites/strapi-page-builder
+```
+
+Once installed rebuild and run your environment with
+
+```bash copy
+npm run build && npm run develop
+```
+
+### Configure Content-Types
+
+1. Create or update a content-type in the [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder). For this example, the content-type should be configured with a few simple fields like `title` and `content` and, most important, a `Relation` field connected to `Template` from `page-builder`.
+1. Create a new content entry in the [Content Manager](http://localhost:1337/admin/content-manager) filling out the fields however you like but leaving the template field blank for now.
+1. Enter your Page Builder API key and the web app editor url in the [Strapi Page Builder settings](http://localhost:1337/admin/settings/page-builder). Note, if on a free plan, only localhost and 127.0.0.1 domains can be used.
+1. Set the default content type to to the one configured above and select the new content entry made above. This is the content that will load when Page Builder first starts. It's recommended you set this to your index page content.
+
+
+## React
+
+### Install the Page Builder React library
+
+From the terminal within your React project, run
+
+```bash copy
+npm install @wecre8websites/strapi-page-builder-react
+```
+
+Configure an environment variable called `PAGE_BUILDER_API_KEY` or similar and assign to it your Page Builder API key.
+
+IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
+
+### Create a basic Page Builder config
+
+Create a new file called config.ts in a folder called `blocks` in your `src` directory and the following code:
+
+```tsx filename="src/blocks/config.tsx" copy
+import { Config } from "@wecre8websites/strapi-page-builder-react";
+
+interface Blocks = {
+  TextComponent: { text: string },
+}
+
+export config: Config<Blocks, {}, "basic" | "other"> = {
+  components: {
+    TextComponent: {
+      fields: {
+        text: { type: "text" },
+      },
+      defaultProps: {
+        text: "Visually editable text",
+      },
+      render: (data) => <div style={{ padding:"6rem" }}>{ data.text }</div>
+    },
+  },
+  root: {}
+}
+```
+
+### Create an editor route
+
+If using Next.js, create a new folder called `editor` in your `app` directory and add the following code. Adapt as necessary if using a different framework.
+
+```tsx filename="app/editor/page.tsx" copy
+import { Editor } from "@wecre8websites/strapi-page-builder-react";
+import { notFound } from "next/navigation";
+import config from "../../blocks/config";
+
+export default async function EditorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ _pagebuilderToken?: string }>;
+}) {
+  const { _pagebuilderToken } = await searchParams;
+  if (!_pagebuilderToken) return notFound();
+  return (
+    <Editor
+      config={config}
+      apiKey={process.env.PAGE_BUILDER_API_KEY as string}
+    />
+  );
+}
+```
+
+### Add the render component
+
+This example uses Next.js and assumes the Content-Type created in Strapi is called Homepage and is a Single type. Adapt as necessary for your configuration.
+
+```tsx filename="app/page.tsx" copy
+import { Render } from "@wecre8websites/strapi-page-builder-react";
+import { notFound } from "next/navigation";
+import config from "../../blocks/config";
+
+export const revalidate = 60;
+
+const getHomepage = async (locale?: string) => {
+  const queryUrl = new URL("http://localhost:1337/api/homepage");
+  if (locale) queryUrl.searchParams.append("locale", locale);
+  queryUrl.searchParams.append("populate", "*");
+  const res = await fetch(queryUrl.toString(), {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_ADMIN_TOKEN}`,
+    },
+  });
+  const { data } = await res.json();
+  const { template, ...content } = data;
+  return { template, ...content };
+};
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string[] }>;
+}) {
+  const { locale } = await params;
+  const { content, template } = await getHomepage(locale);
+
+  if (!template.json || !content) return notFound();
+  return (
+    <Render config={config} data={{ templateJson: template.json, content }} />
+  );
+}
+```
+
+## Start editing
+
+With both Strapi and Next.js running, open [Page Builder](http://localhost:1337/admin/plugins/page-builder/editor) from the Strapi side-bar and start editing your content, visually.
+<br/>
+<Image
+  src="/pagebuilder_start_editing.png"
+  alt="Page Builder"
+  width={1105}
+  height={413}
+/>
+
+You can now start adding custom components to your project.

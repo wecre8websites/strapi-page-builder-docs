@@ -1,0 +1,33 @@
+# Render
+
+Arguably the most important method, the `render` function returns the final component that will be displayed in the Preview Pane of the `<Editor/>` and returned by the `<Render/>` component.
+
+**IMPORTANT** the render function must be a return a JSX component that takes the component data as a prop and returns the JSX to render the component but should not itself be one.
+
+```tsx copy filename="Correct"
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: { type: "text", label: "My Field Name" },
+  },
+  defaultProps: {
+    myFieldName: "The quick brown fox jumps over the lazy red dog.",
+  },
+  label: "My Component",
+  render: (props) => {
+    return <p>{props.myFieldName}</p>;
+  },
+};
+```
+
+```tsx filename="Incorrect, will throw an error" style="error"
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  ..., // other fields
+  render: <p>{props.myFieldName}</p>
+};
+```

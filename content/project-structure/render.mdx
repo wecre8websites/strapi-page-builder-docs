@@ -1,0 +1,50 @@
+# `<Render />` Component
+
+```tsx copy
+import strapiConfig from "@/config/strapiConfig";
+import { Render } from "@wecre8websites/strapi-page-builder-react";
+import { notFound } from "next/navigation";
+import config from "../../blocks/PageBuilderConfig";
+
+const strapiConfig = {
+  url: process.env.NEXT_PUBLIC_API_URL as string,
+  authToken: process.env.STRAPI_ADMIN_TOKEN as string,
+  imageUrl: process.env.NEXT_PUBLIC_IMAGE_URL as string,
+}
+
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+
+  const { template, ...content } = await getCMSContent(locale)
+  if (!template?.json || !content) return notFound();
+  return <Render
+    config={config}
+    data={{
+      templateJson: template.json,
+      content
+    }}
+    strapi={{ ...strapiConfig, locale }} />;
+}
+```
+
+## Props
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `config` | The configuration object for the page builder. See [Editor Configuration](/project-structure/config). | true |
+| `data` | The data payload for the renderer | true |
+| `strapi` | The configuration object for Strapi. | false |
+
+### Data payload
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `templateJson` | The JSON representation of the template, returned by the Page Builder `template` relation field of the requested content type. | true |
+| `content` | The content object returned by the CMS or other external source. Required if using the `processProps` helper for rendering dynamic data. See [Content Data](/components/content-data) for details. | true |
+
+
+### Strapi Configuration Object
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `url` | The URL of the Strapi API. | true |
+| `authToken` | The authentication token for Strapi if required. | false |
+| `imageUrl` | The URL of the image server. Required if using the `media` field type | false |
+| `locale` | The locale of the content if a multilanguage project. | false |

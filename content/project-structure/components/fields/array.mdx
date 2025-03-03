@@ -1,0 +1,61 @@
+import Image from "next/image";
+
+# Array
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: { myArrayFieldName: string }[];
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "array",
+      label: "My Field Name",
+      arrayFields: {
+        myArrayFieldName: {
+          type: "text",
+          label: "My Array Field",
+        },
+      },
+      min: 0,
+      max: 6,
+      getItemSummary: (item) => item.myArrayFieldName,
+      defaultItemProps: { myArrayFieldName: "My Array Item" },
+    },
+  },
+  defaultProps: {
+    myFieldName: [{ myArrayFieldName: "My Array Item" }],
+  },
+  label: "My Component",
+  render: (props) => {
+    return <ul>
+      {props.myFieldName.map((item, index) => <li key={index}>{item.myArrayFieldName}</li>)}
+    </ul>
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `label` | The label for the field in the editor. | false |
+| `arrayFields` | An object defining the fields for each item in the array. Array fields are defined the same as component fields and can use any valid component field type. | true |
+| `min` | The minimum number of items in the array. | false |
+| `max` | The maximum number of items in the array. | false |
+| `getItemSummary` | A function that returns a summary of the item used as the entry title in the editor. | false |
+| `defaultItemProps` | Default values for new items. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_array.png"
+  alt="Page Builder"
+  width={308}
+  height={320}
+/>

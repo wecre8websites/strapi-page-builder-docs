@@ -1,0 +1,43 @@
+import Image from "next/image";
+
+# Number
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: number
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: { type: "number", label: "My Field Name", min: 0, max: 100 },
+  },
+  defaultProps: {
+    myFieldName: 10,
+  },
+  label: "My Component",
+  render: (props) => {
+    return <p>{props.myFieldName}</p>
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `number` | true |
+| `label` | The label for the field in the editor. | false |
+| `min` | The minimum value for the number field. | false |
+| `max` | The maximum value for the number field. | false |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_number.png"
+  alt="Page Builder"
+  width={298}
+  height={95}
+/>

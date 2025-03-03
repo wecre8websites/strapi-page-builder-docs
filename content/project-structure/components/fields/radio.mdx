@@ -1,0 +1,49 @@
+import Image from "next/image";
+
+# Radio
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: boolean;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "radio",
+      label: "My Field Name",
+      options: [
+        { value: false, label: "Disabled" },
+        { value: true, label: "Enabled" },
+      ]
+    },
+  },
+  defaultProps: {
+    myFieldName: true,
+  },
+  label: "My Component",
+  render: (props) => {
+    return <p>{props.myFieldName}</p>
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `label` | The label for the field in the editor. | false |
+| `options` | An array of objects with `value` and `label` properties. | true |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_radio.png"
+  alt="Page Builder"
+  width={306}
+  height={86}
+/>

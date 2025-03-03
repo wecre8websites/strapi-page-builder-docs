@@ -1,0 +1,158 @@
+import Image from "next/image";
+import { Tabs } from "nextra/components";
+
+# Quick Start
+
+Get up and running with Page builder in just a few minutes.
+
+Strapi Page Builder was built and tested with [Strapi 5](https://strapi.io/five) and [Next.js 15](https://nextjs.org/).
+
+## Sign up
+If you don't already have one, visit the [Page Builder sign-up page](https://pagebuilder.wc8.io/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
+
+## Strapi Page Builder Template
+
+Set up a new Strapi environment using the preconfigured Page Builder template by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dlx create-strapi-app@latest cms \
+      --template https://github.com/wecre8websites/strapi-page-builder-cms
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npx create-strapi-app@latest cms \
+      --template https://github.com/wecre8websites/strapi-page-builder-cms
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dlx create-strapi-app@latest cms 
+      --template https://github.com/wecre8websites/strapi-page-builder-cms
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Build, then run the Strapi development environment.
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm build
+      pnpm develop
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npm run build
+      npm run develop
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn build
+      yarn develop
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Open your Strapi admin panel by visiting http://localhost:1337/admin and create an admin user by following the on-screen instructions.
+
+Next, open the [Page Builder settings](http://localhost:1337/admin/settings/page-builder) page and add your Page Builder API key. Leave the remaining values as they are for now.
+
+<Image
+  src="/pagebuilder_settings_strapi.png"
+  alt="Page Builder"
+  width={588}
+  height={534}
+/>
+
+Finally, visit the [API Tokens settings](http://localhost:1337/admin/settings/api-tokens) and create a new Read-Only API token. Save this token as it will be needed in the next step.
+## Next.js Page Builder Template
+
+Set up a new Next.js 15 environment using the preconfigured Page Builder template by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dlx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dlx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Configure an environment variable called `PAGE_BUILDER_API_KEY` assign to it your Page Builder API key.
+
+Configure another one called `STRAPI_ADMIN_TOKEN` and assign to it the Read-Only API token created in the previous step.
+
+IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
+
+Start the Next.js development server by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dev
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npm run dev
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dev
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+## Start editing
+
+With both Strapi and Next.js running, open [Page Builder](http://localhost:1337/admin/plugins/page-builder/editor) from the Strapi side-bar and start editing your content, visually.
+<br/>
+<Image
+  src="/pagebuilder_animation.gif"
+  alt="Page Builder"
+  width={1918}
+  height={1032}
+/>
+

@@ -1,0 +1,61 @@
+# Resolve Fields
+
+Fields can be dynamically set on a component based on the values of other fields.
+
+```tsx
+import { ComponentConfig, Fields } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myChoiceField: string;
+  mySnackField?: string;
+}
+
+const snackFields = {
+  sweet: [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "candy", label: "Candy" },
+  ],
+  salty: [
+    { value: "chips", label: "Chips" },
+    { value: "popcorn", label: "Popcorn" },
+  ]
+} as { [key: string]: { value: string, label: string }[] }
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  resolveFields: ({ props }) => {
+    const fields = {
+      myChoiceField: {
+        type: "radio",
+        label: "My Choice Field",
+        options: [
+          { value: "sweet", label: "Sweet" },
+          { value: "salty", label: "Salty" },
+        ],
+      },
+    } satisfies Partial<Fields<MyComponentProps>>
+    switch (props.myChoiceField) {
+      case "sweet":
+        return {
+          ...fields,
+          mySnackField: { type: "select", label: "My Snack Field", options: snackFields.sweet }
+        }
+      case "salty":
+        return {
+          ...fields,
+          mySnackField: { type: "select", label: "My Snack Field", options: snackFields.salty }
+        }
+      default:
+        return {
+          ...fields,
+          mySnackField: undefined,
+        }
+    }
+  },
+  defaultProps: {
+    myChoiceField: "",
+  },
+  render: (props) => {
+    return <p>Favourite snack: {props?.mySnackField}</p>
+  }
+}
+```

@@ -1,0 +1,50 @@
+import Image from "next/image";
+
+# Select
+
+```tsx
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+
+export interface MyComponentProps {
+  myFieldName: string;
+}
+
+export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyComponentProps>, "type"> = {
+  fields: {
+    myFieldName: {
+      type: "select",
+      label: "My Field Name",
+      options: [
+        { value: "first", label: "First option" },
+        { value: "second", label: "Second option" },
+        { value: "third", label: "Third option" },
+      ]
+    },
+  },
+  defaultProps: {
+    myFieldName: "first",
+  },
+  label: "My Component",
+  render: (props) => {
+    return <p>{props.myFieldName}</p>
+  }
+}
+```
+
+## Field Definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `text` | true |
+| `label` | The label for the field in the editor. | false |
+| `options` | An array of objects with `value` and `label` properties. | true |
+
+## Field Appearance
+
+<br/>
+<Image
+  src="/fields/pagebuilder_fields_select.png"
+  alt="Page Builder"
+  width={302}
+  height={175}
+/>

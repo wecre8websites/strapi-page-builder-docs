@@ -1,0 +1,15 @@
+export default {
+  text: "Text",
+  textarea: "Textarea",
+  richtext: "Rich Text",
+  number: "Number",
+  slider: "Slider",
+  select: "Select",
+  radio: "Radio",
+  color: "Color",
+  media: "Media",
+  strapi: "Strapi",
+  array: "Array",
+  object: "Object",
+  custom: "Custom",
+}
