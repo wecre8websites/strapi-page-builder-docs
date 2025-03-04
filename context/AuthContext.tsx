@@ -69,15 +69,9 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [auth]);
 
   useEffect(() => {
-    if (!user || !user?.uid) {
-      console.log("[AuthProvider] userDoc, missing user", user);
-      return;
-    } else {
-      console.log("[AuthProvider] userDoc, user", user);
-    }
+    if (!user || !user?.uid) return;
     const userDocSubscription = onSnapshot(doc(firestore, "strapi-page-builder", "auth", "accounts", user.uid), async (doc) => {
       const userDocData = doc.data();
-      console.log("[AuthProvider] userDoc", userDocData);
       setUserDoc(userDocData as UserDoc);
     });
     return () => {

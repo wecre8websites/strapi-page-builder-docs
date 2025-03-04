@@ -28,7 +28,6 @@ export type NavBarProps = {
 
 const NavBar: FC<NavBarProps> = ({ logo, navigation }) => {
   const pathName = usePathname();
-  console.log({ pathName });
   const hidden = useMemo(() => { return pathName.indexOf("/docs") === 0 }, [pathName]);
   const [navOpen, setNavOpen] = React.useState(false);
   return (<nav className={`fixed top-0 inset-x-0 z-50 nav-blur bg-neutral-800/30 border-b border-neutral-700/50 ${hidden ? "hidden" : ""}`}>
