@@ -29,7 +29,7 @@ const videoHeroProps: Omit<VideoHeroProps, "valuePropositions"> = {
   ctas: [
     {
       text: "Sign up for free",
-      href: "/signup"
+      href: "/account"
     },
     {
       text: "Read the docs",
@@ -116,7 +116,7 @@ const howItWorksProps: HowItWorksProps = {
   ],
   cta: {
     text: "Get your free API key",
-    href: "/signup"
+    href: "/account"
   }
 }
 
@@ -151,7 +151,7 @@ const useCasesProps: Omit<UseCasesProps, "trustMessage"> = {
   ],
   cta: {
     text: "Get your free API key",
-    href: "/signup"
+    href: "/account"
   },
 }
 
@@ -187,7 +187,7 @@ const pricingProps: PricingProps = {
   ],
   cta: {
     text: "Get Started",
-    href: "/signup"
+    href: "/account"
   }
 }
 
@@ -238,7 +238,7 @@ const ctaProps: Omit<CTAProps, "subheading"> = {
   ctas: [
     {
       text: "Sign up for free",
-      href: "/signup"
+      href: "/account"
     },
     {
       text: "Read the docs",
