@@ -7,7 +7,8 @@ const config: Config = {
   content: ["./app/**/*.{js,jsx,ts,tsx}", './content/**/*.{md,mdx}', "./components/**/*.{js,jsx,ts,tsx}"],
   // presets: [sharedConfig],
   theme: {
-    extend: {}
+    extend: {
+    }
   },
   plugins: []
 };

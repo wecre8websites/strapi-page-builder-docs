@@ -3,6 +3,7 @@ import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { createContext, FC, ReactNode, useCallback, useEffect, useState } from "react";
 import { auth, firestore } from "../firebase/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 type UserDoc = {
   stripeId: string,
@@ -18,7 +19,7 @@ const developmentHostnames = ["localhost", "127.0.0.1"]
 type AuthContextType = {
   user: User | null;
   userDoc: UserDoc | null;
-  signIn: () => void;
+  signIn: (redirect?: string) => void;
   signOut: () => void;
   createApiKey: (name: string) => Promise<void>;
   revokeApiKey: (key: string) => Promise<void>;
@@ -36,8 +37,8 @@ enum AuthErrors {
 const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ context: "strapi-page-builder" });
 
-// const LICENCE_SERVER = "https://licence.wc8.io/strapi-page-builder"
-const LICENCE_SERVER = `http://127.0.0.1:5001/licence-server-682e3/us-central1/routes/strapi-page-builder/auth`
+const LICENCE_SERVER = "https://licence.wc8.io/strapi-page-builder/auth"
+// const LICENCE_SERVER = `http://127.0.0.1:5001/licence-server-682e3/us-central1/routes/strapi-page-builder/auth`
 
 
 export const AuthContext = createContext<AuthContextType>({
@@ -50,6 +51,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const { push } = useRouter();
 
   const [user, setUser] = useState<User | null>(null);
   const [userDoc, setUserDoc] = useState<UserDoc | null>(null);
@@ -83,9 +85,10 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [firestore, user]);
 
-  const signIn = async () => {
+  const signIn = async (redirect?: string) => {
     try {
       await signInWithPopup(auth, GoogleProvider);
+      if (redirect) push(redirect);
     } catch (error) {
       console.error("[AuthProvider] signIn error", error);
     }
@@ -103,9 +106,9 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const createApiKey = useCallback(async (name: string) => {
     if (!user || !user.uid) throw new Error(AuthErrors.MISSING_USER);
     // if (!web_url) throw new Error(AuthErrors.MISSING_WEB_URL);
-    if (!userDoc?.plan) throw new Error(AuthErrors.INVALID_PLAN);
+    const plan = userDoc?.plan || "development";
 
-    if (userDoc.keys && userDoc.keys.find(k => k.name === name)) throw new Error(AuthErrors.INVALID_KEY_NAME)
+    if (userDoc?.keys && userDoc.keys.find(k => k.name === name)) throw new Error(AuthErrors.INVALID_KEY_NAME)
 
     const token = await user.getIdToken();
     const response = await fetch(`${LICENCE_SERVER}`, {
@@ -118,6 +121,7 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     })
     if (response.status < 200 || response.status >= 300) {
       console.error("[AuthProvider] createApiKey error", response.statusText);
+      console.error("[AuthProvider] createApiKey error response", response);
       return;
     }
   }, [user, userDoc]);

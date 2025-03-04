@@ -19,9 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
-// connectFirestoreEmulator(firestore, "localhost", 8080);
-auth.tenantId = "strapi-page-builder";
-connectAuthEmulator(auth, "http://127.0.0.1:9099");
-connectFirestoreEmulator(firestore, "127.0.0.1", 8080)
+auth.tenantId = process.env.NEXT_PUBLIC_FIREBASE_TENANT_ID as string;
+// connectAuthEmulator(auth, "http://127.0.0.1:9099");
+// connectFirestoreEmulator(firestore, "127.0.0.1", 8080)
 
 export { auth, firestore }

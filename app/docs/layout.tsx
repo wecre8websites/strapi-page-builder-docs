@@ -1,8 +1,8 @@
-import "../globals.css"
+import "./globals.docs.css"
 import "nextra-theme-docs/style.css"
 import Image from 'next/image'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Banner, Head } from 'nextra/components'
+import { Banner, Head, } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import AuthProvider from '../../context/AuthContext'
 import "../../firebase/firebaseConfig"

@@ -52,7 +52,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
             <li>Allows non-technical users to manage and update content quickly and easily.</li>
           </ul>
           <div className='flex gap-2 pt-4'>
-            <button type="button" onClick={signIn} className='button'>Sign in or create an account</button>
+            <button type="button" onClick={() => signIn()} className='button'>Sign in or create an account</button>
           </div>
         </>
         : <>
@@ -65,8 +65,8 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
               <Script src="https://js.stripe.com/v3/pricing-table.js" />
               {/* @ts-expect-error Property 'stripe-pricing-table' does not exist on type 'JSX.IntrinsicElements' */}
               <stripe-pricing-table
-                pricing-table-id={process.env.STRIPE_PRICING_TABLE_ID}
-                publishable-key={process.env.STRIPE_PUBLISHABLE_KEY}
+                pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
+                publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
                 customer-email={user.email || undefined}
               />
             </>
@@ -74,7 +74,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
           <div>
             <span className='text-xl font-bold'>Page Builder API Keys</span>
           </div>
-          <Table>
+          <Table className="w-full">
             {!userDoc?.keys || userDoc?.keys?.length <= 0 || userDoc?.plan === "production"
               ? <TableCaption>
                 <Popover open={newKeyPopoverOpen} onOpenChange={(isOpen) => {

@@ -1,24 +1,32 @@
-import Image from 'next/image'
-import { Footer, Navbar } from 'nextra-theme-docs'
-import "nextra-theme-docs/style.css"
-import { Banner, Head } from 'nextra/components'
+import NavBar, { NavBarProps } from '@/components/NavBar'
 import AuthProvider from '../context/AuthContext'
 import "../firebase/firebaseConfig"
-import "./globals.css"
+import "../styles/globals.css"
+import LoginButton from '@/components/LoginButton'
+import { Footer } from 'nextra-theme-docs'
 export const metadata = {
   // Define your metadata here
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
 }
 
-const banner = <Banner storageKey="some-key">Page Builder 1.0 is now available 🎉</Banner>
-const navbar = (
-  <Navbar
-    logo={<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}><Image src="/pagebuilder_logo.png" alt="Page Builder" width={50} height={50} /><span>Page Builder</span></div>}
+const navParProps: NavBarProps = {
+  logo: {
+    src: "/pagebuilder_logo.png",
+    alt: "Page Builder logo",
+    text: "Page Builder"
+  },
+  navigation: [
+    { name: "Docs", href: "/docs" },
+    { name: "Github", href: "https://github.com/wecre8websites/strapi-page-builder", external: true },
+    { name: "npm", href: "https://npmjs.com/package/@wecre8websites/strapi-page-builder", external: true },
+    { component: <LoginButton 
+      className="bg-feature-500 text-white px-6 py-2 rounded-full hover:bg-feature-500/90" 
+      text={"Log In"} 
+      loggedInText='My Account'
+      href="/account" /> },
+  ]
+}
 
-  // ... Your additional navbar options
-  />
-)
-const footer = <Footer>MIT {new Date().getFullYear()} © Nextra.</Footer>
 
 export default async function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
@@ -30,14 +38,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
     >
-      <Head
-      // ... Your additional head options
-      >
-        {/* Your additional tags should be passed as `children` of `<Head>` element */}
-      </Head>
+
       <body>
         <AuthProvider>
+          <NavBar {...navParProps} />
           {children}
+          {/* <Footer /> */}
         </AuthProvider>
       </body>
     </html>

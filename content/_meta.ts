@@ -1,6 +1,10 @@
 export default {
   index: "Introduction",
-  "account": "Account and API Keys",
+  "account": {
+    title: "Account",
+    href: "/account",
+    type: "page"
+  },
   "quick-start": "Quick start",
   "manual-installation": "Manual installation",
   "user-interface": "User interface",
