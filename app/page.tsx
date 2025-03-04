@@ -2,8 +2,6 @@ import CTA, { CTAProps } from '@/components/CTA';
 import FAQ, { FAQProps } from '@/components/Faq';
 import Features, { FeaturesProps } from '@/components/Features';
 import HowItWorks, { HowItWorksProps } from '@/components/HowItWorks';
-import LoginButton from '@/components/LoginButton';
-import { NavBarProps } from '@/components/NavBar';
 import Pricing, { PricingProps } from '@/components/Pricing';
 import UseCases, { UseCasesProps } from '@/components/UseCases';
 import VideoHero, { VideoHeroProps } from '@/components/VideoHero';

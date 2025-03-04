@@ -1,9 +1,8 @@
+import LoginButton from '@/components/LoginButton'
 import NavBar, { NavBarProps } from '@/components/NavBar'
 import AuthProvider from '../context/AuthContext'
 import "../firebase/firebaseConfig"
 import "../styles/globals.css"
-import LoginButton from '@/components/LoginButton'
-import { Footer } from 'nextra-theme-docs'
 export const metadata = {
   // Define your metadata here
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
