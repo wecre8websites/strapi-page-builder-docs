@@ -38,3 +38,8 @@ yarn-error.log*
 # Pagefind
 
 public/_pagefind
+
+# Next-Sitemap
+
+public/*.xml
+public/robots.txt
