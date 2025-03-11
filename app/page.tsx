@@ -47,7 +47,7 @@ const videoHeroProps: Omit<VideoHeroProps, "valuePropositions"> = {
   ],
   video: {
     src: "/pagebuilder_video.mp4",
-    poster:"/pagebuilder_video_poster_.jpg"
+    poster:"/pagebuilder_video_poster.jpg"
   }
 }
 
