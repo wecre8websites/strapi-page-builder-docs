@@ -11,13 +11,14 @@ export type VideoHeroProps = {
   valuePropositions: string[]
   video: {
     src: string
+    poster?: string
   }
 }
 
 const VideoHero: FC<VideoHeroProps> = ({ heading, subheading, ctas, valuePropositions, video }) => {
   return (<div className="relative bg-gradient-to-b from-neutral-800 to-neutral-900 min-h-screen pt-20">
     <div className="absolute inset-0 overflow-hidden">
-      <video className="absolute top-0 left-0 w-full h-full object-cover opacity-30" autoPlay={true} loop={true} muted={true} playsInline={true}>
+      <video className="absolute top-0 left-0 w-full h-full object-cover opacity-30" poster={video?.poster} autoPlay={true} loop={true} muted={true} playsInline={true}>
         <source src={video.src} type="video/mp4" />
       </video>
     </div>
