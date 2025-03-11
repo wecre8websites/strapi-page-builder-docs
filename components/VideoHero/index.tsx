@@ -32,7 +32,7 @@ const VideoHero: FC<VideoHeroProps> = ({ heading, subheading, ctas, valueProposi
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {ctas?.map((cta, index) => index === 0
-            ? (<a key={`ctas-${index}`} href={cta?.href || "#"} target={cta?.external ? "_blank" : ""} className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-neutral-900 bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
+            ? (<a key={`ctas-${index}`} href={cta?.href || "#"} target={cta?.external ? "_blank" : ""} className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
               {cta?.text}
               <svg className="ml-2 size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>

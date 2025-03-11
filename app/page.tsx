@@ -5,12 +5,23 @@ import HowItWorks, { HowItWorksProps } from '@/components/HowItWorks';
 import Pricing, { PricingProps } from '@/components/Pricing';
 import UseCases, { UseCasesProps } from '@/components/UseCases';
 import VideoHero, { VideoHeroProps } from '@/components/VideoHero';
+import { Metadata } from 'next';
+import Head from 'next/head';
 import React, { FC } from 'react';
 
 export const revalidate = 3600;
 
 type PageProps = {
   children: React.ReactNode;
+}
+
+
+export const metadata: Metadata = {
+  title: 'Page Builder for Strapi',
+  description: "Visually edit your Strapi content. Drag and drop your own custom components and dynamically populate them with your CMS content.",
+  openGraph: {
+    images: ['/pagebuilder_animation.gif'],
+  },
 }
 
 const getNpmDownloads = async () => {
@@ -254,21 +265,23 @@ const Page: FC<PageProps> = async ({ children }) => {
   if (downloads > 1000) videoHeroValueProps.push(`Trusted by over ${downloads} developers`);
   const useCasesTrustMessage = downloads > 1000 ? `No credit card required - Trusted by over ${downloads} developers and content editors.` : "No credit card required - Sign up for free";
   return (
-    <main id="main" className="bg-black overflow-x-hidden">
-      <VideoHero
-        {...videoHeroProps}
-        valuePropositions={videoHeroValueProps} />
-      <Features {...featuresProps} />
-      <HowItWorks {...howItWorksProps} />
-      <UseCases {...useCasesProps} trustMessage={useCasesTrustMessage} />
-      <Pricing {...pricingProps} />
-      {/* <Testimonials /> */}
-      <FAQ {...faqProps} />
-      <CTA
-        {...ctaProps}
-        subheading={`${downloads >= 1000 ? `Join ${downloads}+ developers who are already using` : "Start using"} Page Builder to create stunning, easy to maintain websites. Sign up for free with no commitment.`}
-      />
-    </main>
+    <>
+      <main id="main" className="bg-black overflow-x-hidden">
+        <VideoHero
+          {...videoHeroProps}
+          valuePropositions={videoHeroValueProps} />
+        <Features {...featuresProps} />
+        <HowItWorks {...howItWorksProps} />
+        <UseCases {...useCasesProps} trustMessage={useCasesTrustMessage} />
+        <Pricing {...pricingProps} />
+        {/* <Testimonials /> */}
+        <FAQ {...faqProps} />
+        <CTA
+          {...ctaProps}
+          subheading={`${downloads >= 1000 ? `Join ${downloads}+ developers who are already using` : "Start using"} Page Builder to create stunning, easy to maintain websites. Sign up for free with no commitment.`}
+        />
+      </main>
+    </>
   );
 };
 

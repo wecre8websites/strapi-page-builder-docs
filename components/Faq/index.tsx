@@ -40,7 +40,7 @@ const FAQ: FC<FAQProps> = ({ heading, subheading, items, footer }) => {
       <div className="mt-16 text-center">
         <h3 className="text-xl font-semibold text-white mb-4">{footer?.heading}</h3>
         <p className="text-neutral-400 mb-8">{footer.content}</p>
-        <a href={footer?.cta?.href || "#"} target={footer?.cta?.external ? "_blank" : undefined} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-black bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
+        <a href={footer?.cta?.href || "#"} target={footer?.cta?.external ? "_blank" : undefined} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           {footer?.cta?.text}
         </a>
       </div>

@@ -41,7 +41,7 @@ const HowItWorks: FC<HowItWorksProps> = ({ heading, subheading, steps, cta, trus
 
       {/* <!-- CTA Section --> */}
       <div className="mt-16 text-center">
-        <a href={cta?.href || "#"} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-black bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
+        <a href={cta?.href || "#"} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           {cta?.text}
         </a>
         <p className="mt-4 text-neutral-400">{trustMessage}</p>

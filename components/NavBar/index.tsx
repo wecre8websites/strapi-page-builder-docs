@@ -59,7 +59,7 @@ const NavBar: FC<NavBarProps> = ({ logo, navigation }) => {
         </div>
 
         {/* <!-- Mobile Menu Button --> */}
-        <button type="button" onClick={() => setNavOpen(!navOpen)} className="md:hidden cursor-pointer">
+        <button type="button" onClick={() => setNavOpen(!navOpen)} className="md:hidden cursor-pointer" aria-label='Menu'>
           <label htmlFor="nav-toggle" className="md:hidden cursor-pointer">
             <svg className="menu-icon w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path className="menu-icon" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>

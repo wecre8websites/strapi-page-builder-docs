@@ -60,7 +60,7 @@ const VideoFeature: FC<VideoFeatureProps & { isReversed: boolean }> = ({ heading
         </p>
         {cta.hasOwnProperty("component")
           ? (cta as CTAComponent).component
-          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-black bg-feature-500 hover:bg-feature-500/90">
+          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
             {(cta as CTALink).text}
           </a>}
       </div>
@@ -83,7 +83,7 @@ const ImageFeature: FC<ImageFeatureProps & { isReversed: boolean }> = ({ heading
         </p>
         {cta.hasOwnProperty("component")
           ? (cta as CTAComponent).component
-          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-black bg-feature-500 hover:bg-feature-500/90">
+          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
             {(cta as CTALink).text}
           </a>}
       </div>
