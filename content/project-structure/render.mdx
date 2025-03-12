@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 ## Props
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `config` | The configuration object for the page builder. See [Editor Configuration](/project-structure/config). | true |
+| `config` | The configuration object for the page builder. See [Editor Configuration](/docs/project-structure/config). | true |
 | `data` | The data payload for the renderer | true |
 | `strapi` | The configuration object for Strapi. | false |
 
@@ -38,7 +38,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
 | `templateJson` | The JSON representation of the template, returned by the Page Builder `template` relation field of the requested content type. | true |
-| `content` | The content object returned by the CMS or other external source. Required if using the `processProps` helper for rendering dynamic data. See [Content Data](/components/content-data) for details. | true |
+| `content` | The content object returned by the CMS or other external source. Required if using the `processProps` helper for rendering dynamic data. See [Content Data](/docs/project-structure/components/content-data) for details. | true |
 
 
 ### Strapi Configuration Object
