@@ -1,10 +1,10 @@
+import CookieConsentBanner from '@/components/CookieConsentBanner'
 import LoginButton from '@/components/LoginButton'
 import NavBar, { NavBarProps } from '@/components/NavBar'
+import Script from 'next/script'
 import AuthProvider from '../context/AuthContext'
 import "../firebase/firebaseConfig"
 import "../styles/globals.css"
-import { GoogleTagManager } from '@next/third-parties/google'
-import CookieConsentBanner from '@/components/CookieConsentBanner'
 
 export const metadata = {
   // Define your metadata here
@@ -31,6 +31,11 @@ const navParProps: NavBarProps = {
   ]
 }
 
+declare global {
+  interface Window {
+    gtag: (...args:any) => void;
+  }
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
@@ -42,8 +47,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
     >
-      <GoogleTagManager gtmId={"G-RGCKQ47K12"} />
       <body>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-RGCKQ47K12" strategy="beforeInteractive" />
+        <Script strategy='afterInteractive'>
+          {`window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RGCKQ47K12');
+  `}
+        </Script>
         <AuthProvider>
           <NavBar {...navParProps} />
           {children}
@@ -51,6 +64,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </AuthProvider>
         <CookieConsentBanner />
       </body>
-    </html>
+    </html >
   )
 }

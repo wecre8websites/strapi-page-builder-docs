@@ -1,30 +1,21 @@
 'use client';
-import { sendGTMEvent } from "@next/third-parties/google";
-import Script from "next/script";
-import { send } from "process";
 import React, { useEffect } from "react";
 import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 
 const CookieConsentBanner = () => {
-  const [consent, setConsent] = React.useState(false);
+  const [consent, setConsent] = React.useState(getCookieConsentValue("_pagebuilder_consent") === "true");
 
   useEffect(() => {
-    sendGTMEvent('consent');
-    sendGTMEvent('default');
-    sendGTMEvent({
+    window.gtag('consent', 'default', {
       'ad_user_data': 'denied',
       'ad_personalization': 'denied',
       'ad_storage': 'denied',
       'analytics_storage': 'denied'
     });
-    const result = getCookieConsentValue("_pagebuilder_consent")
-    setConsent(result === "true")
   }, [])
 
   useEffect(() => {
-    sendGTMEvent('consent');
-    sendGTMEvent('update');
-    sendGTMEvent({
+    window.gtag('consent', 'update', {
       'ad_user_data': consent ? 'granted' : 'denied',
       'ad_personalization': consent ? 'granted' : 'denied',
       'ad_storage': consent ? 'granted' : 'denied',
