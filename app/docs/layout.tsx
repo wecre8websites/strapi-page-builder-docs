@@ -1,7 +1,7 @@
 import "./globals.docs.css"
 import "nextra-theme-docs/style.css"
 import Image from 'next/image'
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+import { Footer, Layout as NextraLayout, Navbar } from 'nextra-theme-docs'
 import { Banner, Head, } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import AuthProvider from '../../context/AuthContext'
@@ -25,10 +25,10 @@ const navbar = (
 )
 const footer = <Footer>MIT {new Date().getFullYear()} ©&nbsp;<Link href="https://www.wecre8websites.com">wecre8websites</Link>.</Footer>
 
-export default async function RootLayout({ children }: { children: React.ReactNode; }) {
+export default async function Layout({ children }: { children: React.ReactNode; }) {
   return (
     <AuthProvider>
-      <Layout
+      <NextraLayout
         banner={banner}
         navbar={navbar}
         pageMap={await getPageMap("/docs")}
@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       // ... Your additional layout options
       >
         {children}
-      </Layout>
+      </NextraLayout>
     </AuthProvider>
   )
 }

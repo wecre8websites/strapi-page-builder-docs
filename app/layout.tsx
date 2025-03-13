@@ -42,7 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       // Suggested by `next-themes` package https://github.com/pacocoursey/next-themes#with-app
       suppressHydrationWarning
     >
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID as string} />
+      <GoogleTagManager gtmId={"G-RGCKQ47K12"} />
       <body>
         <AuthProvider>
           <NavBar {...navParProps} />
