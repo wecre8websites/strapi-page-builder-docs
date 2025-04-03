@@ -8,7 +8,7 @@ import VideoHero, { VideoHeroProps } from '@/components/VideoHero';
 import Metadata from 'next';
 import { FC } from 'react';
 
-export const revalidate = 3600;
+export const revalidate = 3601;
 
 type PageProps = {
   children: React.ReactNode;
