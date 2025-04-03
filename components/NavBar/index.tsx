@@ -49,7 +49,7 @@ const NavBar: FC<NavBarProps> = ({ logo, navigation }) => {
               : <a
                 key={`navbar-links-${index}`}
                 href={(item as NavLink).href}
-                className={(item as NavLink)?.button ? "bg-feature-500 text-white px-6 py-2 rounded-full hover:bg-feature-500/90" : "text-neutral-400 hover:text-white"}
+                className={(item as NavLink)?.button ? "bg-feature-500 text-white px-6 py-2 rounded-full hover:bg-feature-500/90" : "text-neutral-300 hover:text-white"}
                 // target={item?.external ? "_blank" : undefined}
                 rel={(item as NavLink)?.external ? "noopener noreferrer" : undefined}
               >
@@ -77,7 +77,7 @@ const NavBar: FC<NavBarProps> = ({ logo, navigation }) => {
                 : <a
                   key={`navbar-links-${index}`}
                   href={(item as NavLink).href}
-                  className={(item as NavLink)?.button ? "inline-block bg-feature-500 text-white px-6 py-2 rounded-full hover:bg-feature-500/90" : "text-neutral-400 hover:text-white"}
+                  className={(item as NavLink)?.button ? "inline-block bg-feature-500 text-white px-6 py-2 rounded-full hover:bg-feature-500/90" : "text-neutral-300 hover:text-white"}
                   // target={item?.external ? "_blank" : undefined}
                   rel={(item as NavLink)?.external ? "noopener noreferrer" : undefined}
                 >

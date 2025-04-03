@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 export type UseCasesProps = {
   heading: string,
@@ -21,7 +21,7 @@ const UseCases: FC<UseCasesProps> = ({ heading, subheading, useCases, cta, trust
       {/* <!-- Section Header --> */}
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{heading}</h2>
-        <p className="text-neutral-400 text-lg max-w-3xl mx-auto">{subheading}</p>
+        <p className="text-neutral-300 text-lg max-w-3xl mx-auto">{subheading}</p>
       </div>
 
       {/* <!-- Use Cases Grid --> */}
@@ -36,7 +36,7 @@ const UseCases: FC<UseCasesProps> = ({ heading, subheading, useCases, cta, trust
               </div> */}
               <h3 className="text-xl font-semibold text-white">{useCase.title}</h3>
             </div>
-            <ul className="space-y-4 text-neutral-400">
+            <ul className="space-y-4 text-neutral-300">
               {useCase.features.map((feature, index) => (<li key={`usecases-${index}`} className="flex items-center gap-2">
                 <svg className="w-5 h-5 text-feature-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
@@ -53,7 +53,7 @@ const UseCases: FC<UseCasesProps> = ({ heading, subheading, useCases, cta, trust
         <a href={cta?.href || "#"} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           {cta?.text}
         </a>
-        <p className="mt-4 text-neutral-400">{trustMessage}</p>
+        <p className="mt-4 text-neutral-300">{trustMessage}</p>
       </div>
     </div>
   </section >);

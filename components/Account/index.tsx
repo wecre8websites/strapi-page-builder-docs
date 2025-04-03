@@ -52,14 +52,14 @@ const Account: FC<AccountProps> = ({ }) => {
         ? <div className='flex flex-col md:flex-row gap-24 md:gap-0'>
           <div className='flex-grow min-w-1/2 px-16'>
             <div className="flex justify-between items-center mb-8">
-              <span className="text-neutral-400">Signed in as {user?.email}</span>
+              <span className="text-neutral-300">Signed in as {user?.email}</span>
               <Button onClick={() => signOut()}>Sign out</Button>
             </div>
             <div className="relative max-w-3xl mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
                 API Keys
               </h2>
-              <p className="text-lg sm:text-xl text-neutral-400 mb-10">
+              <p className="text-lg sm:text-xl text-neutral-300 mb-10">
                 Manage your Page Builder API keys here.
               </p>
             </div>
@@ -137,7 +137,7 @@ const Account: FC<AccountProps> = ({ }) => {
             </Table>
             {user && userDoc?.plan === "production" && (userDoc?.keys?.length || 0) >= 5
               ? <div className="relative text-center mt-6">
-                <p className="text-base sm:text-lg text-neutral-400 mb-10">
+                <p className="text-base sm:text-lg text-neutral-300 mb-10">
                   API Key limit reached.
                 </p>
               </div>
@@ -147,7 +147,7 @@ const Account: FC<AccountProps> = ({ }) => {
                 <h3 className="text-lg sm:text-1xl md:text-2xl font-bold text-white mb-6">
                   Need more keys?
                 </h3>
-                <p className="text-base sm:text-lg text-neutral-400 mb-10">
+                <p className="text-base sm:text-lg text-neutral-300 mb-10">
                   The Development tier is limited to one API key per account. Upgrade to the Production tier to unlock more keys.
                 </p>
               </div>
@@ -159,7 +159,7 @@ const Account: FC<AccountProps> = ({ }) => {
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6">
                   Ready for production?
                 </h2>
-                <p className="text-lg sm:text-xl text-neutral-400 mb-10">
+                <p className="text-lg sm:text-xl text-neutral-300 mb-10">
                   Upgrade your Page Builder account to unlock more features.
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 export type CTAProps = {
   heading: string,
@@ -30,7 +30,7 @@ const CTA: FC<CTAProps> = ({ heading, subheading, ctas, trustMessage }) => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
             {heading}
           </h2>
-          <p className="text-lg sm:text-xl text-neutral-400 mb-10">
+          <p className="text-lg sm:text-xl text-neutral-300 mb-10">
             {subheading}
           </p>
 
@@ -50,7 +50,7 @@ const CTA: FC<CTAProps> = ({ heading, subheading, ctas, trustMessage }) => {
           </div>
 
           {/* <!-- Additional Info --> */}
-          <div className="mt-8 text-sm text-neutral-400">
+          <div className="mt-8 text-sm text-neutral-300">
             {trustMessage}
           </div>
         </div>

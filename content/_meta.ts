@@ -1,14 +1,32 @@
 export default {
-  index: "Introduction",
+  "*": {
+    theme: {
+      breadcrumb: false,
+    },
+  },
+  index: "Quick Start",
+  "Home": {
+    title: "Home",
+    href: "/",
+    type: "page"
+  },
   "account": {
     title: "Account",
     href: "/account",
     type: "page"
   },
-  "quick-start": "Quick start",
+  "quick-start": {
+    title: "Quick start",
+    display: "hidden"
+  },
   "manual-installation": "Manual installation",
   "user-interface": "User interface",
-  "project-structure": "Project structure",
+  "project-structure": {
+    title: "Project structure",
+    theme: {
+      breadcrumb: true,
+    }
+  }
   // demo: {
   //   title: "Try the demo",
   //   href: "/docs/demo",

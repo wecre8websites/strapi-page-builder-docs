@@ -7,12 +7,12 @@ At it's most basic, the configuration object defines the components available fo
 A simple configuration object might look like this:
 ```tsx filename="src/blocks/config.tsx" copy
 import { Config } from "@wecre8websites/strapi-page-builder-react";
-
-interface Blocks = {
+ 
+interface Blocks {
   TextComponent: { text: string },
 }
-
-export config: Config<Blocks, {}, "basic" | "other"> = {
+ 
+export const config: Config<Blocks, {}, "basic" | "other"> = {
   components: {
     TextComponent: {
       fields: {

@@ -14,4 +14,9 @@ export default withNextra({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    turbo: {
+      treeShaking: true,
+    }
+  }
 })

@@ -5,9 +5,8 @@ import HowItWorks, { HowItWorksProps } from '@/components/HowItWorks';
 import Pricing, { PricingProps } from '@/components/Pricing';
 import UseCases, { UseCasesProps } from '@/components/UseCases';
 import VideoHero, { VideoHeroProps } from '@/components/VideoHero';
-import { Metadata } from 'next';
-import Head from 'next/head';
-import React, { FC } from 'react';
+import Metadata from 'next';
+import { FC } from 'react';
 
 export const revalidate = 3600;
 
@@ -17,10 +16,11 @@ type PageProps = {
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pagebuilder.wc8.io'),
   title: 'Page Builder for Strapi',
   description: "Visually edit your Strapi content. Drag and drop your own custom components and dynamically populate them with your CMS content.",
   openGraph: {
-    images: ['/pagebuilder_animation.gif'],
+    images: ['/pagebuilder_logo.png'],
   },
 }
 
@@ -56,10 +56,10 @@ const featuresProps: FeaturesProps = {
     {
       heading: "Add a drag & drop editor to your Strapi CMS",
       content: "Bring your Strapi content to life with a visual editor. Build and assign templates to your Strapi content-types and reuse them over and over and over again. ",
-      cta: {
-        text: "Read the docs",
-        href: "/docs"
-      },
+      // cta: {
+      //   text: "Read the docs",
+      //   href: "/docs"
+      // },
       video: {
         src: "/pagebuilder_video_drag_and_drop.mp4"
       }
@@ -67,10 +67,10 @@ const featuresProps: FeaturesProps = {
     {
       heading: "Give creative control to your content editors",
       content: "Let your content editors create and update content without needing to know how to code. They can add, remove, and rearrange components with ease.",
-      cta: {
-        text: "Read the docs",
-        href: "/docs"
-      },
+      // cta: {
+      //   text: "Read the docs",
+      //   href: "/docs"
+      // },
       video: {
         src: "/pagebuilder_video_creative_control.mp4"
       }
@@ -78,10 +78,10 @@ const featuresProps: FeaturesProps = {
     {
       heading: "Localize your content",
       content: "Create and manage localized content in multiple languages. Use Strapi's internationalization feature to create and manage localized templates in multiple languages.",
-      cta: {
-        text: "Read the docs",
-        href: "/docs"
-      },
+      // cta: {
+      //   text: "Read the docs",
+      //   href: "/docs"
+      // },
       video: {
         src: "/pagebuilder_video_localize.mp4",
       },
@@ -89,10 +89,10 @@ const featuresProps: FeaturesProps = {
     {
       heading: "Give only the permissions needed",
       content: "Use Strapi's Role-based access control to restrict permissions to only those that are needed for each team member. Read-only, edit and modify permissions allow for granualar control and protects your templates.",
-      cta: {
-        text: "Read the docs",
-        href: "/docs"
-      },
+      // cta: {
+      //   text: "Read the docs",
+      //   href: "/docs"
+      // },
       images: [
         {
           src: "/pagebuilder_permissions_1.png",
@@ -160,8 +160,8 @@ const useCasesProps: Omit<UseCasesProps, "trustMessage"> = {
     },
   ],
   cta: {
-    text: "Get your free API key",
-    href: "/account"
+    text: "Quick start guide",
+    href: "/docs#quick-start"
   },
 }
 
@@ -263,8 +263,9 @@ const Page: FC<PageProps> = async ({ children }) => {
   const videoHeroValueProps = [
     "Quick installation and setup"
   ]
-  if (downloads > 1000) videoHeroValueProps.push(`Trusted by over ${downloads} developers`);
-  const useCasesTrustMessage = downloads > 1000 ? `No credit card required - Trusted by over ${downloads} developers and content editors.` : "No credit card required - Sign up for free";
+  console.log("downloads", downloads);
+  if (downloads > 100) videoHeroValueProps.push(`Trusted by over ${downloads} developers`);
+  const useCasesTrustMessage = downloads > 100 ? `No credit card required - Trusted by over ${downloads} developers and content editors.` : "No credit card required - Sign up for free";
   return (
     <>
       <main id="main" className="bg-black overflow-x-hidden">

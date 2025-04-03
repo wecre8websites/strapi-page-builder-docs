@@ -81,7 +81,8 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const signIn = async (redirect?: string) => {
     try {
-      await signInWithPopup(auth, GoogleProvider);
+      const result = await signInWithPopup(auth, GoogleProvider);
+      window.gtag("sign_in", { user_id: result.user.uid });
       if (redirect) push(redirect);
     } catch (error) {
       console.error("[AuthProvider] signIn error", error);

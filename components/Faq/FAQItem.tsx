@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 export type FAQItemProps = {
   heading: string,
@@ -17,7 +17,7 @@ const FAQItem: FC<FAQItemProps> = ({ heading, content, defaultOpen }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </h3>
-      <p className={`text-neutral-400 transition transition-[maxHeight] ${isOpen ? "mt-4 max-h-16" : "max-h-0 opacity-0"}`}>{content}</p>
+      <p className={`text-neutral-300 transition transition-[maxHeight] ${isOpen ? "mt-4 max-h-48" : "max-h-0 opacity-0"}`}>{content}</p>
     </div>
   </div>);
 };

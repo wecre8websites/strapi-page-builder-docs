@@ -1,10 +1,12 @@
 @import "tailwindcss";
+@tailwind utilities; /* Include utility classes */
 @import "nextra-theme-docs/style.css";
 
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --nextra-bg: rgb(var(--background-start-rgb));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,9 +21,11 @@
   .docs a {
     @apply inline-flex items-center hover:underline;
   }
-  .button, a.button {
+  .button,
+  a.button {
     @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition hover:no-underline;
   }
+
   /* h1 {
     @apply text-4xl font-extrabold;
   }
@@ -43,4 +47,24 @@
   p {
     @apply text-base;
   } */
+}
+aside.nextra-mobile-nav > div,
+aside.nextra-mobile-nav > ul {
+  @apply bg-white;
+  -webkit-mask-image: unset;
+  mask-image: unset;
+}
+@media (prefers-color-scheme: dark) {
+  aside.nextra-mobile-nav > div,
+  aside.nextra-mobile-nav > ul {
+    @apply bg-neutral-900;
+    -webkit-mask-image: unset;
+    mask-image: unset;
+  }
+}
+.dark aside.nextra-mobile-nav > div,
+.dark aside.nextra-mobile-nav > ul {
+  @apply bg-neutral-900;
+  -webkit-mask-image: unset;
+  mask-image: unset;
 }

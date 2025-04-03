@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 type TestimonialsProps = {}
 
@@ -14,7 +14,7 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
       {/* <!-- Section Header --> */}
       <div className="max-w-3xl mx-auto text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">What Our Users Say</h2>
-        <p className="text-neutral-400 text-lg">Join thousands of satisfied creators who've transformed their content with GoEnhance AI</p>
+        <p className="text-neutral-300 text-lg">Join thousands of satisfied creators who've transformed their content with GoEnhance AI</p>
       </div>
   
       {/* <!-- Testimonials Grid --> */}
@@ -29,7 +29,7 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
               </div>
               <div>
                 <div className="text-white font-semibold">@creativemind</div>
-                <div className="text-neutral-400 text-sm">TikTok Creator</div>
+                <div className="text-neutral-300 text-sm">TikTok Creator</div>
               </div>
             </div>
             <div className="flex gap-1 mb-4">
@@ -53,7 +53,7 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
               </div>
               <div>
                 <div className="text-white font-semibold">@techreview</div>
-                <div className="text-neutral-400 text-sm">YouTube Creator</div>
+                <div className="text-neutral-300 text-sm">YouTube Creator</div>
               </div>
             </div>
             <div className="flex gap-1 mb-4">
@@ -77,7 +77,7 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
               </div>
               <div>
                 <div className="text-white font-semibold">@artistry</div>
-                <div className="text-neutral-400 text-sm">Digital Artist</div>
+                <div className="text-neutral-300 text-sm">Digital Artist</div>
               </div>
             </div>
             <div className="flex gap-1 mb-4">
@@ -97,15 +97,15 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div className="text-center">
             <div className="text-3xl font-bold text-white mb-2">660,518+</div>
-            <div className="text-neutral-400">Active Users</div>
+            <div className="text-neutral-300">Active Users</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-white mb-2">4.9/5</div>
-            <div className="text-neutral-400">Average Rating</div>
+            <div className="text-neutral-300">Average Rating</div>
           </div>
           <div className="text-center">
             <div className="text-3xl font-bold text-white mb-2">1M+</div>
-            <div className="text-neutral-400">Videos Created</div>
+            <div className="text-neutral-300">Videos Created</div>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ const Testimonials:FC<TestimonialsProps> = ({}) => {
         <a href="#" className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-black bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           Join Our Community
         </a>
-        <p className="mt-4 text-neutral-400">Start creating amazing content today</p>
+        <p className="mt-4 text-neutral-300">Start creating amazing content today</p>
       </div>
     </div>
   </section>);

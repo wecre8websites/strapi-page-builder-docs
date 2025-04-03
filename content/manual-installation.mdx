@@ -49,12 +49,12 @@ Create a new file called config.ts in a folder called `blocks` in your `src` dir
 
 ```tsx filename="src/blocks/config.tsx" copy
 import { Config } from "@wecre8websites/strapi-page-builder-react";
-
-interface Blocks = {
+ 
+interface Blocks {
   TextComponent: { text: string },
 }
-
-export config: Config<Blocks, {}, "basic" | "other"> = {
+ 
+export const config: Config<Blocks, {}, "basic" | "other"> = {
   components: {
     TextComponent: {
       fields: {
@@ -90,6 +90,11 @@ export default async function EditorPage({
     <Editor
       config={config}
       apiKey={process.env.PAGE_BUILDER_API_KEY as string}
+      strapi={{
+        url: process.env.STRAPI_URL as string,
+        authToken: process.env.STRAPI_API_TOKEN as string,
+        imageUrl: process.env.STRAPI_IMAGE_URL as string,
+      }}
     />
   );
 }

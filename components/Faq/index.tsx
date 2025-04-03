@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import FAQItem, { FAQItemProps } from './FAQItem';
 
 export type FAQProps = {
@@ -28,7 +28,7 @@ const FAQ: FC<FAQProps> = ({ heading, subheading, items, footer }) => {
       {/* <!-- Section Header --> */}
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{heading}</h2>
-        <p className="text-neutral-400 text-lg">{subheading}</p>
+        <p className="text-neutral-300 text-lg">{subheading}</p>
       </div>
 
       {/* <!-- FAQ Items --> */}
@@ -39,7 +39,7 @@ const FAQ: FC<FAQProps> = ({ heading, subheading, items, footer }) => {
       {/* <!-- Still Have Questions --> */}
       <div className="mt-16 text-center">
         <h3 className="text-xl font-semibold text-white mb-4">{footer?.heading}</h3>
-        <p className="text-neutral-400 mb-8">{footer.content}</p>
+        <p className="text-neutral-300 mb-8">{footer.content}</p>
         <a href={footer?.cta?.href || "#"} target={footer?.cta?.external ? "_blank" : undefined} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           {footer?.cta?.text}
         </a>

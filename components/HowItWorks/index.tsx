@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 export type HowItWorksProps = {
   heading: string,
@@ -20,7 +20,7 @@ const HowItWorks: FC<HowItWorksProps> = ({ heading, subheading, steps, cta, trus
       {/* <!-- Section Header --> */}
       <div className="text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{heading}</h2>
-        <p className="text-neutral-400 text-lg max-w-3xl mx-auto">{subheading}</p>
+        <p className="text-neutral-300 text-lg max-w-3xl mx-auto">{subheading}</p>
       </div>
 
       {/* <!-- Steps Grid --> */}
@@ -34,7 +34,7 @@ const HowItWorks: FC<HowItWorksProps> = ({ heading, subheading, steps, cta, trus
               </div>
               <h3 className="text-xl font-semibold text-white">{step.heading}</h3>
             </div>
-            <p className="text-neutral-400">{step.content}</p>
+            <p className="text-neutral-300">{step.content}</p>
           </div>
         </div>))}
       </div>
@@ -44,7 +44,7 @@ const HowItWorks: FC<HowItWorksProps> = ({ heading, subheading, steps, cta, trus
         <a href={cta?.href || "#"} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">
           {cta?.text}
         </a>
-        <p className="mt-4 text-neutral-400">{trustMessage}</p>
+        <p className="mt-4 text-neutral-300">{trustMessage}</p>
       </div>
     </div>
   </section>);

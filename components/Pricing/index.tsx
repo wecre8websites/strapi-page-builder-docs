@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 type PlanProps = {
   name: string,
@@ -33,7 +33,7 @@ const Pricing: FC<PricingProps> = ({ heading, subheading, plans, cta }) => {
       {/* <!-- Section Header --> */}
       <div className="max-w-3xl mx-auto text-center mb-16">
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">{heading}</h2>
-        <p className="text-neutral-400 text-lg">{subheading}</p>
+        <p className="text-neutral-300 text-lg">{subheading}</p>
       </div>
 
       {/* <!-- Pricing Grid --> */}
@@ -56,7 +56,7 @@ const RegularPlan: FC<PlanProps & { cta: CTAProps }> = ({ name, price, features,
       <h3 className="text-xl font-semibold text-white mb-4">{name}</h3>
       <div className="flex items-baseline">
         <span className="text-4xl font-bold text-white">{hasPrice ? `$${yearlyPricePerMonth || price.monthly}${yearlyPricePerMonth ? "*" : ""}` : "Free"}</span>
-        <span className="text-neutral-400 ml-2">{hasPrice ? "/month" : ""}</span>
+        <span className="text-neutral-300 ml-2">{hasPrice ? "/month" : ""}</span>
       </div>
       <ul className="space-y-4 my-8">
         {features.map((feature, index) => (<li key={`plan-${index}`} className="flex items-center text-neutral-300">
@@ -68,7 +68,7 @@ const RegularPlan: FC<PlanProps & { cta: CTAProps }> = ({ name, price, features,
       </ul>
       {yearlyPricePerMonth
         ? <div className='text-center w-full'>
-          <span className="text-neutral-400 text-xs">* with an annual subscription, otherwise ${price.monthly} / month.</span>
+          <span className="text-neutral-300 text-xs">* with an annual subscription, otherwise ${price.monthly} / month.</span>
         </div>
         : null}
       <a href={cta?.href || "#"} className="block w-full text-center px-6 py-3 bg-neutral-700 text-white rounded-full hover:bg-feature-500 transition-colors">
@@ -90,7 +90,7 @@ const PopularPlan: FC<PlanProps & { cta: CTAProps }> = ({ name, price, features,
       <h3 className="text-xl font-semibold text-white mb-4">{name}</h3>
       <div className="flex items-baseline">
         <span className="text-4xl font-bold text-white">{hasPrice ? `$${yearlyPricePerMonth || price.monthly}` : "Free"}</span>
-        <span className="text-neutral-400 ml-2">{hasPrice ? "/month" : ""}{yearlyPricePerMonth ? "*" : ""}</span>
+        <span className="text-neutral-300 ml-2">{hasPrice ? "/month" : ""}{yearlyPricePerMonth ? "*" : ""}</span>
       </div>
       <ul className="space-y-4 my-7">
         {features.map((feature, index) => (<li key={`plan-${index}`} className="flex items-center text-neutral-300">
@@ -105,7 +105,7 @@ const PopularPlan: FC<PlanProps & { cta: CTAProps }> = ({ name, price, features,
       </a>
       {yearlyPricePerMonth
         ? <div className='absolute bottom-2 left-1/2 -translate-x-1/2 text-center w-full '>
-          <span className="text-neutral-400 text-xs">* with an annual subscription, otherwise ${price.monthly} / month.</span>
+          <span className="text-neutral-300 text-xs">* with an annual subscription, otherwise ${price.monthly} / month.</span>
         </div>
         : null}
     </div>

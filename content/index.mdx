@@ -1,8 +1,185 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Tabs } from "nextra/components";
 
-# <div style={{display:"flex", alignItems:"center", gap:"1rem"}}><Image src="/pagebuilder_logo.png" alt="Page Builder" width={75} height={75} />Page Builder for Strapi</div>
+<div style={{display:"flex", alignItems:"center", gap:"1rem"}}><Image src="/pagebuilder_logo.png" alt="Page Builder" width={75} height={75} /><h1 className="x:tracking-tight x:text-slate-900 x:dark:text-slate-100 x:font-bold x:text-4xl h-auto">Page Builder for Strapi</h1></div>
 
+<br />
+<video
+  className="w-full h-full"
+  autoPlay={true}
+  loop={true}
+  muted={true}
+  playsInline={true}
+  preload="none">
+  <source src="/pagebuilder_video_full.mp4" type="video/mp4" />
+</video>
+
+## What is Page Builder?
+
+Page Builder is a modular visual page editor for Strapi CMS for websites build in React. You can use Page Builder to build custom reusable templates for your website and bring your CMS content to life.
+
+- Quick installation and setup.
+- Build custom components that can be reused in any template.
+- Add, remove, change, drag and drop components and sections with an easy to use interface.
+- Connect your CMS data and use it in your custom components with no additional coding.
+- Reuse templates and fill them with dynamic data.
+- Use Strapi's Role-based access control to restrict permissions to only content editors.
+- Allows non-technical users to manage and update content quickly and easily.
+
+<br />
+<br />
+
+## Quick Start
+
+Get up and running with Page builder in just a few minutes.
+
+Strapi Page Builder was built and tested with [Strapi 5](https://strapi.io/five) and [Next.js 15](https://nextjs.org/).
+
+### Sign up
+If you don't already have one, visit the [Page Builder sign-up page](/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
+
+### Strapi Page Builder Template
+
+Set up a new Strapi environment using the preconfigured Page Builder template by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dlx create-strapi-app@latest cms \
+      --template https://github.com/wecre8websites/strapi-page-builder-cms \
+      --template-branch master
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npx create-strapi-app@latest cms \
+      --template https://github.com/wecre8websites/strapi-page-builder-cms
+      --template-branch master
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dlx create-strapi-app@latest cms 
+      --template https://github.com/wecre8websites/strapi-page-builder-cms
+      --template-branch master
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Build, then run the Strapi development environment.
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm build
+      pnpm develop
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npm run build
+      npm run develop
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn build
+      yarn develop
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Open your Strapi admin panel by visiting http://localhost:1337/admin and create an admin user by following the on-screen instructions.
+
+Next, open the [Page Builder settings](http://localhost:1337/admin/settings/page-builder) page and add your Page Builder API key. Leave the remaining values as they are for now.
+
+<Image
+  src="/pagebuilder_settings_strapi.png"
+  alt="Page Builder"
+  width={588}
+  height={534}
+/>
+
+Finally, visit the [API Tokens settings](http://localhost:1337/admin/settings/api-tokens) and create a new Read-Only API token. Save this token as it will be needed in the next step.
+### Next.js Page Builder Template
+
+Set up a new Next.js 15 environment using the preconfigured Page Builder template by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dlx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dlx create-next-app@latest web \
+      --example https://github.com/wecre8websites/strapi-page-builder-demo
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+Configure an environment variable called `PAGE_BUILDER_API_KEY` assign to it your Page Builder API key.
+
+Configure another one called `STRAPI_ADMIN_TOKEN` and assign to it the Read-Only API token created in the previous step.
+
+IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
+
+Start the Next.js development server by running
+
+<Tabs items={["pnpm", "npm", "yarn"]}>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      pnpm dev
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      npm run dev
+      ```
+    </div>
+  </Tabs.Tab>
+  <Tabs.Tab>
+    <div>
+      ```bash copy
+      yarn dev
+      ```
+    </div>
+  </Tabs.Tab>
+</Tabs>
+
+### Start editing
+
+With both Strapi and Next.js running, open [Page Builder](http://localhost:1337/admin/plugins/page-builder/editor) from the Strapi side-bar and start editing your content, visually.
 <br/>
 <Image
   src="/pagebuilder_animation.gif"
@@ -11,39 +188,12 @@ import Link from "next/link";
   height={1032}
 />
 
-## What is Page Builder?
 
-Page Builder is a modular visual page editor for Strapi CMS for websites build in React. You can use Page Builder to build custom reusable templates for your website and bring your CMS content to life.
-
-* Quick installation and setup.
-* Build custom components that can be reused in any template.
-* Add, remove, change, drag and drop components and sections with an easy to use interface.
-* Connect your CMS data and use it in your custom components with no additional coding.
-* Reuse templates and fill them with dynamic data.
-* Use Strapi's Role-based access control to restrict permissions to only content editors.
-* Allows non-technical users to manage and update content quickly and easily.
-
-<br />
-<Link
-  href="/account"
-  className="button"
->
-  Sign up for free
-</Link>
-
-<br />
 
 ## Get Support
 
 If you have any questions about Page Builder, please open a [GitHub issue](https://github.com/wecre8websites/strapi-page-builder).
 
-## Attribution
-
-Page Builder is built using [Puck](https://puckeditor.com/), [@strapi/sdk-plugin](https://www.npmjs.com/package/@strapi/sdk-plugin) and [create-next-app](https://www.npmjs.com/package/create-next-app).
-
-Page Builder documentation is built using [Nextra](https://nextra.site).
-
 ## License
 
 Page Builder is licensed under MIT.
-

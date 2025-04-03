@@ -8,6 +8,11 @@ const config: Config = {
   // presets: [sharedConfig],
   theme: {
     extend: {
+      colors: {
+        primary: 'var(--nextra-primary)',
+        secondary: 'var(--nextra-secondary)',
+        background: 'var(--nextra-background)',
+      }
     }
   },
   plugins: []

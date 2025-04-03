@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 
 type CTALink = {
   text: string,
@@ -15,7 +15,7 @@ type ImageFeatureProps = {
   forceDirection?: 'left' | 'right',
   heading: string,
   content: string,
-  cta: CTAProps
+  cta?: CTAProps
   images: {
     src: string,
     alt: string
@@ -26,7 +26,7 @@ type VideoFeatureProps = {
   forceDirection?: 'left' | 'right',
   heading: string,
   content: string,
-  cta: CTAProps
+  cta?: CTAProps
   video: {
     src: string
   }
@@ -55,17 +55,17 @@ const VideoFeature: FC<VideoFeatureProps & { isReversed: boolean }> = ({ heading
     <div className="grid lg:grid-cols-2 gap-12 items-center">
       <div className={`text-center  ${isReversed ? "lg:text-right lg:order-2" : "lg:text-left"}`}>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">{heading}</h2>
-        <p className="text-neutral-400 text-lg mb-8">
+        <p className="text-neutral-300 text-lg mb-8">
           {content}
         </p>
-        {cta.hasOwnProperty("component")
+        {cta?.hasOwnProperty("component")
           ? (cta as CTAComponent).component
-          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
+          : (cta as CTALink)?.href ? <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
             {(cta as CTALink).text}
-          </a>}
+          </a> : null}
       </div>
       <div className={`relative rounded-xl overflow-hidden ${isReversed ? "lg:order-1" : ""}`}>
-        <video className="w-full h-full object-contain rounded" autoPlay={true} loop={true} muted={true} playsInline={true}>
+        <video className="w-full h-full object-contain rounded" autoPlay={true} loop={true} muted={true} playsInline={true} preload="none">
           <source src={video.src} type="video/mp4" />
         </video>
       </div>
@@ -78,14 +78,14 @@ const ImageFeature: FC<ImageFeatureProps & { isReversed: boolean }> = ({ heading
     <div className="grid lg:grid-cols-2 gap-12 items-center">
       <div className={`text-center ${isReversed ? "lg:text-right lg:order-2" : "lg:text-left"}`}>
         <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">{heading}</h2>
-        <p className="text-neutral-400 text-lg mb-8">
+        <p className="text-neutral-300 text-lg mb-8">
           {content}
         </p>
-        {cta.hasOwnProperty("component")
+        {cta?.hasOwnProperty("component")
           ? (cta as CTAComponent).component
-          : <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
+          : (cta as CTALink)?.href ? <a href={(cta as CTALink).href} className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90">
             {(cta as CTALink).text}
-          </a>}
+          </a> : null}
       </div>
       <div className={`grid grid-cols-2 gap-4 ${isReversed ? "lg:order-1" : ""}`}>
         {images?.map((image, index) => (
