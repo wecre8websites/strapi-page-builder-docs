@@ -17,6 +17,9 @@ type PageProps = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pagebuilder.wc8.io'),
+  alternates: {
+    canonical:"/"
+  },
   title: 'Page Builder for Strapi',
   description: "Visually edit your Strapi content. Drag and drop your own custom components and dynamically populate them with your CMS content.",
   openGraph: {

@@ -11,6 +11,9 @@ import Metadata from "next"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pagebuilder.wc8.io'),
+  alternates: {
+    canonical:"/docs"
+  },
   title: 'Page Builder for Strapi | Documentation',
   description: "Page Builder is a modular visual page editor for Strapi CMS for websites build in React.",
   openGraph: {
