@@ -7,7 +7,7 @@ import AuthProvider from '../../context/AuthContext'
 import "../../firebase/firebaseConfig"
 import Link from "next/link"
 import Github_Logo from "@/components/Github_logo"
-import Metadata from "next"
+import { Metadata } from "next"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pagebuilder.wc8.io'),

@@ -5,7 +5,7 @@ import HowItWorks, { HowItWorksProps } from '@/components/HowItWorks';
 import Pricing, { PricingProps } from '@/components/Pricing';
 import UseCases, { UseCasesProps } from '@/components/UseCases';
 import VideoHero, { VideoHeroProps } from '@/components/VideoHero';
-import Metadata from 'next';
+import { Metadata } from 'next';
 import { FC } from 'react';
 
 export const revalidate = 3600;
@@ -18,7 +18,7 @@ type PageProps = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://pagebuilder.wc8.io'),
   alternates: {
-    canonical:"/"
+    canonical: "/"
   },
   title: 'Page Builder for Strapi',
   description: "Visually edit your Strapi content. Drag and drop your own custom components and dynamically populate them with your CMS content.",
@@ -50,7 +50,7 @@ const videoHeroProps: Omit<VideoHeroProps, "valuePropositions"> = {
   ],
   video: {
     src: "/pagebuilder_video.mp4",
-    poster:"/pagebuilder_video_poster.jpg"
+    poster: "/pagebuilder_video_poster.jpg"
   }
 }
 

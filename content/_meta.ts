@@ -15,10 +15,6 @@ export default {
     href: "/account",
     type: "page"
   },
-  "quick-start": {
-    title: "Quick start",
-    display: "hidden"
-  },
   "manual-installation": "Manual installation",
   "user-interface": "User interface",
   "project-structure": {
