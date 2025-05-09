@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Editor Component - Page Builder Docs',
+  title: 'Editor Component - Strapi Page Builder Docs',
   description: 'Props and usage for the Editor component',
 }
 
@@ -7,6 +7,7 @@ export const metadata = {
 
 ```tsx copy
 import { Editor } from "@wecre8websites/strapi-page-builder-react";
+import "@wecre8websites/strapi-page-builder-react/editor.css"
 import { notFound } from "next/navigation";
 import config from "../../blocks/PageBuilderConfig";
 
@@ -26,8 +27,8 @@ export default async function EditorPage({ searchParams }: { searchParams: Promi
 ## Props
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `apiKey` | The API key for the page builder. [Sign up for free](/account). | true |
-| `config` | The configuration object for the page builder. See [Editor Configuration](/docs/project-structure/config). | true |
+| `apiKey` | The API key for the Strapi Page Builder. [Sign up for free](/account). | true |
+| `config` | The configuration object for the Strapi Page Builder. See [Editor Configuration](/docs/project-structure/config). | true |
 | `strapi` | The configuration object for Strapi. | false |
 
 ### Strapi Configuration Object

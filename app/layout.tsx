@@ -6,16 +6,11 @@ import AuthProvider from '../context/AuthContext'
 import "../firebase/firebaseConfig"
 import "../styles/globals.css"
 
-export const metadata = {
-  // Define your metadata here
-  // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
-}
-
 const navParProps: NavBarProps = {
   logo: {
     src: "/pagebuilder_logo.png",
-    alt: "Page Builder logo",
-    text: "Page Builder"
+    alt: "Strapi Page Builder logo",
+    text: "Strapi Page Builder"
   },
   navigation: [
     { name: "Docs", href: "/docs" },

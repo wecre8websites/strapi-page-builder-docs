@@ -1,0 +1,22 @@
+export const metadata = {
+  title: 'Localiztion - Strapi Page Builder Docs',
+  description: 'Key concepts for localized templates in Strapi Page Builder'
+}
+
+# Localization
+
+Strapi Page Builder supports localization of templates and content. This means you can create templates and content in multiple languages, allowing you to serve a global audience.
+
+## Localized Content
+
+Localized templates can only be saved for content that is also localized. This means that you must first save a localized version of the content before you can save a localized version of the template. This is to ensure that the localized template is always associated with the correct localized content.
+
+Once a localized version of the content has been saved, you can create a localized version of the template. This is done by selecting the desired language in the Strapi Page Builder editor and saving the template. The localized version of the template will be created automatically, and you can edit it just like any other template.
+
+## Template Shape Enforcement
+
+By default Strapi Page Builder will enforce the shape of a localized template to match the original language. This means that when working with a localized template, you will only be able to edit the fields that are present in the original language template. This is to ensure that the localized version of the template remains consistent with the original.
+
+If you wish to completely unrestrict the localized template, you can do so by setting the `Enforce template shape for alternate locales` property to `False` in the Strapi Page Builder plugin settings. This will allow you to add or remove sections from the localized template.
+
+

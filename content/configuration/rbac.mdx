@@ -1,0 +1,23 @@
+import Image from "next/image";
+
+export const metadata = {
+  title: "Role-Based Access Control - Strapi Page Builder Docs",
+  description: "Controlling user permissions in Strapi Page Builder",
+};
+
+# Role-Based Access Control (RBAC)
+
+Strapi Page Builder uses the built-in Strapi Role-Based Access Control (RBAC) system to control user permissions. This allows you to control which users have access to the Strapi Page Builder editor and what changes they can make.
+
+RBAC permissions are set in the Strapi admin panel under Settings > Users & Permissions Plugin > Roles. Here you can create new roles or edit existing roles to set the permissions for the Strapi Page Builder editor.
+
+<br/>
+<div className="relative flex-grow flex-shrink-0 flex justify-center">
+  <Image src="/pagebuilder_permissions_2.png" alt="Strapi Page Builder RBAC" width={544} height={374} />
+</div>
+
+Four levels of permissions are available:
+- **None**: No access to the Strapi Page Builder editor.
+- **Access Page Builder**: Access to the Strapi Page Builder editor, but no ability to make changes. Read-Only access.
+- **Edit Template Content**: Access to the Strapi Page Builder editor with the ability to make changes to content, but not template shape. This is ideal for translators or content editors.
+- **Add & remove template components**: Access to the Strapi Page Builder editor with the ability to make changes to both content and template shape. This is ideal for developers or designers.

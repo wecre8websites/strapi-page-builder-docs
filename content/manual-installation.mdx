@@ -1,18 +1,18 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: 'Manual Installation - Page Builder Docs',
-  description: 'Add Page Builder to an existing Strapi project'
+  title: 'Manual Installation - Strapi Page Builder Docs',
+  description: 'Add Strapi Page Builder to an existing Strapi project'
 }
 
 # Manual Installation
 
 ## Sign up
-If you don't already have one, visit the [Page Builder sign-up page](/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
+If you don't already have one, visit the [Strapi Page Builder sign-up page](/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
 
 ## Strapi
 
-### Install the Page Builder plugin for strapi
+### Install the Strapi Page Builder plugin for strapi
 
 From the terminal within your Strapi project, run
 
@@ -30,13 +30,13 @@ npm run build && npm run develop
 
 1. Create or update a content-type in the [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder). For this example, the content-type should be configured with a few simple fields like `title` and `content` and, most important, a `Relation` field connected to `Template` from `page-builder`.
 1. Create a new content entry in the [Content Manager](http://localhost:1337/admin/content-manager) filling out the fields however you like but leaving the template field blank for now.
-1. Enter your Page Builder API key and the web app editor url in the [Strapi Page Builder settings](http://localhost:1337/admin/settings/page-builder). Note, if on a free plan, only localhost and 127.0.0.1 domains can be used.
-1. Set the default content type to to the one configured above and select the new content entry made above. This is the content that will load when Page Builder first starts. It's recommended you set this to your index page content.
+1. Enter your Strapi Page Builder API key and the web app editor url in the [Strapi Page Builder settings](http://localhost:1337/admin/settings/page-builder). Note, if on a free plan, only localhost and 127.0.0.1 domains can be used.
+1. Set the default content type to to the one configured above and select the new content entry made above. This is the content that will load when Strapi Page Builder first starts. It's recommended you set this to your index page content.
 
 
 ## React
 
-### Install the Page Builder React library
+### Install the Strapi Page Builder React library
 
 From the terminal within your React project, run
 
@@ -44,11 +44,11 @@ From the terminal within your React project, run
 npm install @wecre8websites/strapi-page-builder-react
 ```
 
-Configure an environment variable called `PAGE_BUILDER_API_KEY` or similar and assign to it your Page Builder API key.
+Configure an environment variable called `PAGE_BUILDER_API_KEY` or similar and assign to it your Strapi Page Builder API key.
 
 IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
 
-### Create a basic Page Builder config
+### Create a basic Strapi Page Builder config
 
 Create a new file called config.ts in a folder called `blocks` in your `src` directory and the following code:
 
@@ -81,6 +81,7 @@ If using Next.js, create a new folder called `editor` in your `app` directory an
 
 ```tsx filename="app/editor/page.tsx" copy
 import { Editor } from "@wecre8websites/strapi-page-builder-react";
+import "@wecre8websites/strapi-page-builder-react/editor.css"
 import { notFound } from "next/navigation";
 import config from "../../blocks/config";
 
@@ -147,11 +148,11 @@ export default async function Page({
 
 ## Start editing
 
-With both Strapi and Next.js running, open [Page Builder](http://localhost:1337/admin/plugins/page-builder/editor) from the Strapi side-bar and start editing your content, visually.
+With both Strapi and Next.js running, open [Strapi Page Builder](http://localhost:1337/admin/plugins/page-builder/editor) from the Strapi side-bar and start editing your content, visually.
 <br/>
 <Image
   src="/pagebuilder_start_editing.png"
-  alt="Page Builder"
+  alt="Strapi Page Builder"
   width={1105}
   height={413}
 />

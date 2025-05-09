@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/"
   },
-  title: 'Page Builder for Strapi',
+  title: 'Strapi Page Builder',
   description: "Visually edit your Strapi content. Drag and drop your own custom components and dynamically populate them with your CMS content.",
   openGraph: {
     images: ['/pagebuilder_logo.png'],
@@ -99,11 +99,11 @@ const featuresProps: FeaturesProps = {
       images: [
         {
           src: "/pagebuilder_permissions_1.png",
-          alt: "Page Builder RBAC 1"
+          alt: "Strapi Page Builder RBAC 1"
         },
         {
           src: "/pagebuilder_permissions_2.png",
-          alt: "Page Builder RBAC 2"
+          alt: "Strapi Page Builder RBAC 2"
         }
       ]
     },
@@ -112,19 +112,19 @@ const featuresProps: FeaturesProps = {
 
 const howItWorksProps: HowItWorksProps = {
   heading: "Get started in minutes",
-  subheading: "Follow these simple steps to get started with Page Builder.",
+  subheading: "Follow these simple steps to get started with Strapi Page Builder.",
   steps: [
     {
       heading: "Clone the Strapi template",
-      content: "Our Strapi template comes with Page Builder pre-installed. Clone the template, set up an admin account and add your Page Builder API key."
+      content: "Our Strapi template comes with Strapi Page Builder pre-installed. Clone the template, set up an admin account and add your Strapi Page Builder API key."
     },
     {
       heading: "Clone the Next.js template",
-      content: "Our Next.js template comes a selection of premade components, localization support and, of course Page Builder pre-installed. Clone the template and add your API keys."
+      content: "Our Next.js template comes a selection of premade components, localization support and, of course Strapi Page Builder pre-installed. Clone the template and add your API keys."
     },
     {
       heading: "Create your first template",
-      content: "Within Page Builder, choose your content type, content and locale then, drag and drop your components and assign your template to your content type."
+      content: "Within Strapi Page Builder, choose your content type, content and locale then, drag and drop your components and assign your template to your content type."
     }
   ],
   cta: {
@@ -135,7 +135,7 @@ const howItWorksProps: HowItWorksProps = {
 
 const useCasesProps: Omit<UseCasesProps, "trustMessage"> = {
   heading: "The perfect solution, no matter your role",
-  subheading: "Page Builder is the perfect solution for developers, content editors, and agencies.",
+  subheading: "Strapi Page Builder is the perfect solution for developers, content editors, and agencies.",
   useCases: [
     {
       title: "Content Editors",
@@ -207,7 +207,7 @@ const pricingProps: PricingProps = {
 
 const faqProps: FAQProps = {
   heading: "Frequently Asked Questions",
-  subheading: "Everything you need to know about Page Builder",
+  subheading: "Everything you need to know about Strapi Page Builder",
   items: [
     {
       heading: "Can I cancel my subscription?",
@@ -227,8 +227,8 @@ const faqProps: FAQProps = {
       content: "We do not offer refunds. If you cancel your subscription, you will not be charged again. You will have access to your account until the end of your billing cycle.",
     },
     {
-      heading: "Can I try Page Builder for free?",
-      content: "Yes, you can try Page Builder for free. Sign up for a free API key and get started building your first template.",
+      heading: "Can I try Strapi Page Builder for free?",
+      content: "Yes, you can try Strapi Page Builder for free. Sign up for a free API key and get started building your first template.",
     },
     {
       heading: "Do you offer support?",
@@ -283,7 +283,7 @@ const Page: FC<PageProps> = async ({ children }) => {
         <FAQ {...faqProps} />
         <CTA
           {...ctaProps}
-          subheading={`${downloads >= 1000 ? `Join ${downloads}+ developers who are already using` : "Start using"} Page Builder to create stunning, easy to maintain websites. Sign up for free with no commitment.`}
+          subheading={`${downloads >= 1000 ? `Join ${downloads}+ developers who are already using` : "Start using"} Strapi Page Builder to create stunning, easy to maintain websites. Sign up for free with no commitment.`}
         />
       </main>
     </>

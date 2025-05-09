@@ -1,0 +1,35 @@
+import Image from "next/image";
+
+export const metadata = {
+  title: "Using Templates - Strapi Page Builder Docs",
+  description: "How to make use of a template created in Strapi Page Builder",
+};
+
+# Using Templates
+
+Strapi Page Builder can only be used with content types that have a relation to the `Template` content type. This is done in the Strapi Content-Type Builder. Once a template has been created, it can be assigned to any content type that has a relation to the `Template` content type.
+
+## Adding a Template Relation
+
+In order to be able to edit a template for a content type, you must first add a relation field to the content type. This is done in the Strapi Content-Type Builder.
+
+1. Open the Content-Type Builder in Strapi.
+1. Select the content type you want to add the template relation to.
+1. Click on the "Add new field" button.
+1. Select the "Relation" field type.
+1. Choose the the `Template` from `page-builder` in the available fields.
+1. Name the field `template` or something similar (by default this is set as `page-builder-template`). The documentation will refer to this field as `template` in the examples.
+
+<br/>
+<div className="relative flex-grow flex-shrink-0 flex justify-center">
+  <Image src="/pagebuilder_field_relation.png" alt="Strapi Page Builder" width={851} height={431} />
+</div>
+
+## Assigning a Template to a Content Entry
+
+Strapi Page Builder does not automatically assign templates to your content. Upon creating a new template that you wish to use, you must assign it to your content using the Strapi Content Manager.
+<br/>
+<div className="relative flex-grow flex-shrink-0 flex justify-center">
+  <Image src="/pagebuilder_assign_template.png" alt="Strapi Page Builder" width={572} height={93} />
+</div>
+

@@ -29,7 +29,7 @@ const featuresProps: FeaturesProps = {
     {
       forceDirection: "right",
       heading: "Sign up now for free",
-      content: "No credit card required. No comittment. Get started in a few minutes. Try Page Builder today!",
+      content: "No credit card required. No comittment. Get started in a few minutes. Try Strapi Page Builder today!",
       cta: {
         component: <LoginButton text="Sign in or create an account" className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-feature-500 hover:bg-feature-500/90" />,
       },
@@ -60,7 +60,7 @@ const Account: FC<AccountProps> = ({ }) => {
                 API Keys
               </h2>
               <p className="text-lg sm:text-xl text-neutral-300 mb-10">
-                Manage your Page Builder API keys here.
+                Manage your Strapi Page Builder API keys here.
               </p>
             </div>
             <Table className="w-full">
@@ -160,7 +160,7 @@ const Account: FC<AccountProps> = ({ }) => {
                   Ready for production?
                 </h2>
                 <p className="text-lg sm:text-xl text-neutral-300 mb-10">
-                  Upgrade your Page Builder account to unlock more features.
+                  Upgrade your Strapi Page Builder account to unlock more features.
                 </p>
               </div>
 

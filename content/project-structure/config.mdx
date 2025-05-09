@@ -1,11 +1,11 @@
 export const metadata = {
-  title: 'Editor Configuration - Page Builder Docs',
-  description: 'Set up blocks and categories for the Page Builder editor',
+  title: 'Editor Configuration - Strapi Page Builder Docs',
+  description: 'Set up blocks and categories for the Strapi Page Builder editor',
 }
 
 # Editor Configuration
 
-Page builder requires a configuration object to define the components available for use in the editor. The configuration object is a JSON object that defines the components available for use in the editor. The configuration object is passed to the `Editor` component as a prop.
+Strapi Page Builder requires a configuration object to define the components available for use in the editor. The configuration object is a JSON object that defines the components available for use in the editor. The configuration object is passed to the `Editor` component as a prop.
 
 At it's most basic, the configuration object defines the components available for use in the editor. Each component is defined by a key-value pair where the key is the component name and the value is the component configuration object.
 
@@ -101,7 +101,7 @@ const config: Config<PageBuilderBlocks, RootProps, Categories> = {
 export default config;
 ```
 
-In the above configuration, components and their configurations are split out into seperate modules. This allows isolation of client and server rendering for supported components and makes it easier to maintain as your site grows. Visit the [Page Builder Demo Github page](https://github.com/wecre8websites/strapi-page-builder-demo) to see the full implementation.
+In the above configuration, components and their configurations are split out into seperate modules. This allows isolation of client and server rendering for supported components and makes it easier to maintain as your site grows. Visit the [Strapi Page Builder Demo Github page](https://github.com/wecre8websites/strapi-page-builder-demo) to see the full implementation.
 
 ## Categories
 

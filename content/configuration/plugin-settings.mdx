@@ -1,0 +1,22 @@
+import Image from "next/image";
+
+export const metadata = {
+  title: "Plugin Settings - Strapi Page Builder Docs",
+  description: "Initial plugin cofiguration for Strapi Page Builder",
+};
+
+# Plugin Settings
+
+Before you can start using Strapi Page Builder, you need to configure the plugin. This is done in Settings > Global Settings > Page Builder.
+
+<br/>
+<div className="relative flex-grow flex-shrink-0 flex justify-center">
+  <Image src="/pagebuilder_settings_strapi.png" alt="Strapi Page Builder" width={588} height={534} />
+</div>
+
+Here you can configure the following settings:
+- **API Key**: This is the API key that is used to authenticate requests to the Strapi Page Builder API. [Sign up for a free development account](/account) to get your API key.
+- **Website Editor URL**: This is the URL containing the Strapi Page Builder `<Editor />` component. When using a free development account, this is limited to a local address, ie `localhost` and `127.0.0.1`. URLs can contain ports and be http or https. For production sites, https is **strongly** recommended.
+- **Default Content Type**: This is the content type that be selected by default when you access the Strapi Page Builder editor. This is generally set to the Homepage or Index content-type.
+- **Default Content Entry**: This is the content entry that will be selected by default when you access the Strapi Page Builder editor. This is generally set to the Homepage or Index content entry.
+- **Enforce template shape for alternate locales**: This setting allows you to enforce the shape of a localized template to match the original language. This means that when working with a localized template, you will only be able to edit the fields that are present in the original language template. This is to ensure that the localized version of the template remains consistent with the original.

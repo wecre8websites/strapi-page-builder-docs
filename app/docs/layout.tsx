@@ -14,18 +14,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical:"/docs"
   },
-  title: 'Page Builder for Strapi | Documentation',
-  description: "Page Builder is a modular visual page editor for Strapi CMS for websites build in React.",
+  title: 'Strapi Page Builder | Documentation',
+  description: "Strapi Page Builder is a modular visual page editor for Strapi CMS for websites build in React.",
   openGraph: {
     images: ['/pagebuilder_logo.png'],
   },
 }
 
-const banner = <Banner storageKey="some-key">Page Builder 1.0 is now available 🎉</Banner>
+const banner = <Banner storageKey="some-key">Strapi Page Builder 1.0 is now available 🎉</Banner>
 const navbar = (
   <Navbar
     className="bg-white dark:bg-neutral-900"
-    logo={<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}><Image src="/pagebuilder_logo.png" alt="Page Builder" width={50} height={50} /><span>Page Builder for Strapi</span></div>}
+    logo={<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}><Image src="/pagebuilder_logo.png" alt="Strapi Page Builder" width={50} height={50} /><span>Strapi Page Builder</span></div>}
     // logoLink={"https://pagebuilder.wc8.io"}
     projectLink={"https://github.com/wecre8websites/strapi-page-builder"}
     projectIcon={<Github_Logo />}

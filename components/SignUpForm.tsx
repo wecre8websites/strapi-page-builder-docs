@@ -72,7 +72,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
             </>
             : null}
           <div>
-            <span className='text-xl font-bold'>Page Builder API Keys</span>
+            <span className='text-xl font-bold'>Strapi Page Builder API Keys</span>
           </div>
           <Table className="w-full">
             {!userDoc?.keys || userDoc?.keys?.length <= 0 || userDoc?.plan === "production"

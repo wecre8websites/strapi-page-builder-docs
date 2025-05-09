@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Render Component - Page Builder Docs',
+  title: 'Render Component - Strapi Page Builder Docs',
   description: 'Props and usage for the Render component',
 }
 
@@ -35,14 +35,14 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 ## Props
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `config` | The configuration object for the page builder. See [Editor Configuration](/docs/project-structure/config). | true |
+| `config` | The configuration object for the Strapi Page Builder. See [Editor Configuration](/docs/project-structure/config). | true |
 | `data` | The data payload for the renderer | true |
 | `strapi` | The configuration object for Strapi. | false |
 
 ### Data payload
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `templateJson` | The JSON representation of the template, returned by the Page Builder `template` relation field of the requested content type. | true |
+| `templateJson` | The JSON representation of the template, returned by the Strapi Page Builder `template` relation field of the requested content type. | true |
 | `content` | The content object returned by the CMS or other external source. Required if using the `processProps` helper for rendering dynamic data. See [Content Data](/docs/project-structure/components/content-data) for details. | true |
 
 
