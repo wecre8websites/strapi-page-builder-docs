@@ -53,7 +53,10 @@ const Account: FC<AccountProps> = ({ }) => {
           <div className='flex-grow min-w-1/2 px-16'>
             <div className="flex justify-between items-center mb-8">
               <span className="text-neutral-300">Signed in as {user?.email}</span>
-              <Button onClick={() => signOut()}>Sign out</Button>
+              <div className="flex gap-2 justify-between items-center">
+                <Button onClick={() => signOut()}>Sign out</Button>
+                {userDoc?.plan === "production" ? <a href="https://billing.stripe.com/p/login/eVa8AgbZD2ky9sk7ss" target="_blank" className='border rounded p-2'>Manage subscription</a> : null}
+              </div>
             </div>
             <div className="relative max-w-3xl mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
