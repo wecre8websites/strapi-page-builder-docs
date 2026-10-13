@@ -88,4 +88,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 export { serverConfig as default } from "./serverConfig";
 ```
 
-Use [slot fields](/docs/configuration/slots-migration) to nest components: they render the same on the server and in the editor, and `<DropZone>` is deprecated.
+### DropZones and ServerRender
+
+Templates that still use `<DropZone>` render correctly with `<Render />`. Puck's server renderer, however, has no `<DropZone>` component: inside `ServerRender` a `<DropZone>` renders nothing, so its children are silently left out (this was already the case in 1.1). If you server render legacy zones, either call `puck.renderDropZone({ zone: "name" })` from your component, which `ServerRender` provides, or, better, [migrate to slot fields](/docs/configuration/slots-migration). Slots render the same on the server and in the editor.

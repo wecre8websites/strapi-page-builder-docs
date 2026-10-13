@@ -29,6 +29,17 @@ export const ColumnsConfig = {
 }
 ```
 
+In TypeScript, a slot's stored value is typed `Slot`, and what your render function receives is a `SlotComponent`; both are exported from the library. Slot fields accept `allow` and `disallow` lists, and `<Left />` accepts `className`, `style`, `allow` and `disallow`:
+
+```tsx
+import { Slot, SlotComponent } from "@wecre8websites/strapi-page-builder-react";
+
+type ColumnsProps = { left: Slot; right: Slot };
+type ColumnsRenderProps = { left: SlotComponent; right: SlotComponent };
+```
+
+Your root component no longer needs a `<DropZone zone="default-zone" />`: render the `children` it receives instead.
+
 A zone whose name is built from the component id, for example `` zone={`${id}-dropzone`} ``, is a *dynamic* zone. Give it any static slot name (for example `items`) and map it in step 3.
 
 ## 2. Allow the migration on Strapi
