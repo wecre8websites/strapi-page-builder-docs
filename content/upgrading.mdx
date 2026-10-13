@@ -40,6 +40,7 @@ Update the plugin and the React library together. Either order works, and the ne
 - Only the first Strapi field of a component was resolved; all of them are now, including inside arrays and objects.
 - Content types with irregular plurals (`category`) are looked up correctly; set `pluralName` for unusual ones.
 - The editor no longer asks to discard unsaved changes right after loading.
+- `ServerRender` with `richtext` fields. Puck 0.21 added its own `richtext` field type, which clashed with Page Builder's rich text (a Strapi blocks array) when rendering on the server: blocks received a React element instead of their content and development builds crashed. Page Builder's rich text now renders unchanged.
 - Template, content and duplicate-template pickers are searchable and no longer empty each other.
 
 ### Dependencies
