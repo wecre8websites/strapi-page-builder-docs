@@ -3,4 +3,5 @@ export default {
   'using-templates': "Using templates",
   'localization': "Localization",
   'rbac': "RBAC",
+  'slots-migration': "DropZones to slots",
 }

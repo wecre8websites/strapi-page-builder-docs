@@ -5,7 +5,7 @@ export const metadata = {
 
 # `<Editor />` Component
 
-```tsx copy
+```tsx copy filename="app/editor/page.tsx"
 import { Editor } from "@wecre8websites/strapi-page-builder-react";
 import "@wecre8websites/strapi-page-builder-react/editor.css"
 import { notFound } from "next/navigation";
@@ -20,20 +20,37 @@ const strapiConfig = {
 export default async function EditorPage({ searchParams }: { searchParams: Promise<{ _pagebuilderToken?: string }> }) {
   const { _pagebuilderToken } = await searchParams;
   if (!_pagebuilderToken) return notFound();
-  return <Editor config={config} apiKey={process.env.PAGE_BUILDER_API_KEY as string} strapi={strapiConfig} />
+  return <Editor
+    config={config}
+    apiKey={process.env.PAGE_BUILDER_API_KEY as string}
+    strapi={strapiConfig}
+    allowedParentOrigin="https://cms.example.com" />
 }
 ```
+
+<div className="x:mt-4 x:rounded-lg x:border x:p-4">
+**Use `<Editor />` from a Server Component.** There it keeps `apiKey` and `strapi.authToken` on the server (see [Security](/docs/security)). If you wrap it in your own `"use client"` component, or render it in a client-only app, those values are sent to the browser.
+</div>
 
 ## Props
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `apiKey` | The API key for the Strapi Page Builder. [Sign up for free](/account). | true |
+| `apiKey` | The API key for the Strapi Page Builder. [Sign up for free](/account). Server-only: never sent to the browser. | true |
 | `config` | The configuration object for the Strapi Page Builder. See [Editor Configuration](/docs/project-structure/config). | true |
 | `strapi` | The configuration object for Strapi. | false |
+| `allowedParentOrigin` | The origin of your Strapi admin, e.g. `https://cms.example.com`. When set, the editor only talks to that origin. Recommended in production, together with a `frame-ancestors` header. See [Security](/docs/security). | false |
+| `contentKey` | If set, the entry being edited is exposed to components as `metadata[contentKey]` instead of at the top level. | false |
+| `additionalContent` | Extra data merged into the content available to components (for example a dictionary or navigation). Kept on the server until the editor token is validated. | false |
+| `fetch` | A [Server Action](https://nextjs.org/docs/app/getting-started/updating-data) `(contentId) => content` used to load the entry yourself instead of using the data from Strapi. Its id is public, so it must check permissions itself. | false |
 
 ### Strapi Configuration Object
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
 | `url` | The URL of the Strapi API. | true |
-| `authToken` | The authentication token for Strapi if required. | false |
+| `authToken` | A Strapi API token, used on the server to load content for previews. A Read-Only token is enough. Never sent to the browser. | false |
 | `imageUrl` | The URL of the image server. Required if using the `media` field type | false |
+
+## How the editor is protected
+- The editor token that Strapi puts in the iframe URL is checked on the server, with your API key, before any content is shown. Invalid, expired or missing tokens show an error and nothing else.
+- Content lookups made while editing go through a server action that needs the validated session, so the Strapi token is never used by the browser.
+- The editor ignores messages from any window except its direct parent, and only after validation.

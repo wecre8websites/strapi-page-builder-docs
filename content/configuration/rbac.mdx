@@ -21,3 +21,9 @@ Four levels of permissions are available:
 - **Access Page Builder**: Access to the Strapi Page Builder editor, but no ability to make changes. Read-Only access.
 - **Edit Template Content**: Access to the Strapi Page Builder editor with the ability to make changes to content, but not template shape. This is ideal for translators or content editors.
 - **Add & remove template components**: Access to the Strapi Page Builder editor with the ability to make changes to both content and template shape. This is ideal for developers or designers.
+
+A separate permission, **Access the Page Builder settings** (under Settings in the same roles screen), controls who can change the API key and the editor URL. Users without it see the API key masked and cannot save settings.
+
+### Content permissions
+
+Strapi Page Builder respects the Content Manager permissions of the editing user. For a Strapi field in a component, the editor can only list and pick entries of content types that the user has the **Read** permission for. Give editors Read access to every content type your components reference, such as products or categories. Users, admin and other system content types are never available.

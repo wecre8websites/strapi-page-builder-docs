@@ -17,6 +17,8 @@ export default {
   },
   "manual-installation": "Manual installation",
   "user-interface": "User interface",
+  "security": "Security",
+  "upgrading": "Upgrading to 1.2",
   "project-structure": {
     title: "Project structure",
     theme: {

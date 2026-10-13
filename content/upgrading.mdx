@@ -1,0 +1,60 @@
+export const metadata = {
+  title: 'Upgrading to 1.2 - Strapi Page Builder Docs',
+  description: 'What changed in Strapi Page Builder 1.2 and how to upgrade from 1.1',
+}
+
+# Upgrading to 1.2
+
+Version 1.2 of `@wecre8websites/strapi-page-builder-react` and the Strapi plugin closes a security problem in 1.1 and earlier, and fixes a number of bugs. For most projects the upgrade needs **no code changes**.
+
+## Upgrade steps
+
+1. Update the Strapi plugin and rebuild Strapi:
+
+   ```bash copy
+   npm install @wecre8websites/strapi-page-builder@latest
+   npm run build
+   ```
+1. Update the React library in your web app:
+
+   ```bash copy
+   npm install @wecre8websites/strapi-page-builder-react@latest
+   ```
+1. Make sure your editor route and pages that use `<Render />` are **Server Components** (the default in the Next.js App Router) and that your Next.js version is 15.5, or 16.4 and later.
+1. Run the [secrets check](/docs/security#check-your-site) against your editor route and a public page.
+1. **Rotate your secrets** if you ever deployed 1.1.2 or earlier with a public editor route, or used `<Render strapi={{ authToken }} />` on a public page: revoke the API key on your [account page](/account), create a new Strapi API token, and update your environment.
+1. Optional but recommended: set `allowedParentOrigin` on `<Editor />` and send a `frame-ancestors` header ([details](/docs/security#protect-the-editor-route)).
+
+Update the plugin and the React library together. Either order works, and the new editor keeps working while the licence service is being updated.
+
+## What changed
+
+### Security
+- `<Editor />` and `<Render />` keep `apiKey` and `authToken` on the server (see [Security](/docs/security)). A page that used to contain them no longer does.
+- Editor tokens are validated on the server, expire after 12 hours, and the licence service no longer hands the list of valid tokens to newer editors.
+- The Strapi plugin now checks permissions: content lookups need Content Manager read access to that content type and never return user or admin content, saving settings needs the settings permission, and the API key is masked for users who cannot change settings. Template creation requires a valid content type.
+- Messages between Strapi and the editor are origin and source checked.
+
+### Fixes
+- Content from Strapi fields was resolved in the wrong language on pages rendered after the first locale; each render now uses its own locale.
+- Only the first Strapi field of a component was resolved; all of them are now, including inside arrays and objects.
+- Content types with irregular plurals (`category`) are looked up correctly; set `pluralName` for unusual ones.
+- The editor no longer asks to discard unsaved changes right after loading.
+- Template, content and duplicate-template pickers are searchable and no longer empty each other.
+
+### Dependencies
+- The editor engine is now [Puck](https://puckeditor.com) 0.23 under its new package name, `@puckeditor/core` (it was `@measured/puck`). If your own code imports from `@measured/puck`, change the import. Everything you import from `@wecre8websites/strapi-page-builder-react` is unchanged. The editor shows a new Blocks/Outline rail on the left.
+- `<DropZone>` is deprecated. It keeps working; see [migrating to slots](/docs/configuration/slots-migration).
+- The plugin's peer range for `@strapi/strapi` is now `^5.31.2` instead of exactly `5.31.2`, so it installs on newer Strapi 5 releases.
+
+### New
+- `strapi-page-builder-check-secrets` command, `validateEditorToken` helper (from `/rsc`), `allowedParentOrigin` prop, `pluralName` option on `strapi` fields.
+- `strapi-page-builder-migrate-slots` command and the `PAGE_BUILDER_SLOT_MIGRATION` setting.
+
+## Troubleshooting
+
+**The editor shows `INVALID_TOKEN` or an error about the licence server.** Reload the editor from Strapi to get a fresh token (tokens expire after 12 hours). Check that the origin of your web app matches the editor URL in the Page Builder settings; development accounts can only use `localhost` and `127.0.0.1`.
+
+**Strapi fields show an empty list for some editors.** Give their role the Read permission on those content types.
+
+**The editor fails with "Server action not found" on Next.js 16.0.** Upgrade to Next.js 16.4 or later (or use Webpack).

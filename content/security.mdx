@@ -1,0 +1,65 @@
+export const metadata = {
+  title: 'Security - Strapi Page Builder Docs',
+  description: 'Keep your API key and Strapi token private, protect the editor route and check your site',
+}
+
+# Security
+
+Strapi Page Builder handles two secrets:
+
+- your **Page Builder API key**, which identifies your licence, and
+- a **Strapi API token**, which lets your web app read content from Strapi.
+
+Both must stay on your server. This page explains how version 1.2 keeps them there, what you must not do, and how to check your own site.
+
+<div className="x:mt-4 x:rounded-lg x:border x:p-4">
+**Using version 1.1.2 or earlier?** The documented setup passed both secrets to a component that is sent to the browser, so anyone who could open your editor route (or, for the token, any public page that used `<Render />` with `authToken`) could read them. Upgrade to 1.2, [check your site](#check-your-site) and rotate any key or token that was exposed. See the [upgrade guide](/docs/upgrading).
+</div>
+
+## What version 1.2 does for you
+
+With the standard setup, in a Next.js Server Component, you do not need to change any code:
+
+- **`<Editor />`** keeps `apiKey`, `strapi.authToken` and `additionalContent` on the server. The editor token in the URL is validated on the server (failing closed if the licence server is unreachable) before anything is shown, and content lookups use a server action that requires that validated session. Nothing in the page lets the browser use your Strapi token directly.
+- **`<Render />`** keeps `strapi.authToken` on the server. The browser can only ask for documents that the page's own template already references.
+- The editor only talks to its direct parent window, and only after validation. Set `allowedParentOrigin` to pin it to your Strapi admin's origin.
+
+## What you must not do
+
+- Do not import `Editor` or `Render` into a file that starts with `"use client"`, or pass `apiKey` or `authToken` through your own client component. Anything a client component receives is sent to the browser.
+- Do not give these values a `NEXT_PUBLIC_` prefix and do not hard-code them in source files such as `codegen.ts`.
+- In a client-only React app (no server components) there is nowhere to keep a secret. The editor logs a warning in that case; use a server (for example a small API route) to hold the token and resolve content there.
+- Do not enable draft mode, load private data or run privileged server code on your editor route before checking the token yourself. Use `validateEditorToken`, shown in [Manual installation](/docs/manual-installation#create-an-editor-route).
+- If you pass a Server Action to `<Editor fetch={...} />`, its id is public. Make it check permissions itself.
+
+## Protect the editor route
+
+The editor runs in an iframe inside your Strapi admin, so only your Strapi admin should be able to frame it.
+
+1. Send a `Content-Security-Policy: frame-ancestors https://cms.example.com` header on the editor route.
+1. Pass `allowedParentOrigin="https://cms.example.com"` to `<Editor />`.
+1. In Strapi, allow your site in `frame-src` ([instructions](/docs/manual-installation#allow-the-editor-to-be-framed)).
+
+## Check your site
+
+Fetch your editor route and a public page the way an anonymous visitor would. The command prints only the key names and the lengths of any values it finds, never the values:
+
+```bash copy
+npx strapi-page-builder-check-secrets "https://www.example.com/editor?_pagebuilderToken=probe"
+npx strapi-page-builder-check-secrets "https://www.example.com/"
+```
+
+It exits with an error if it finds an `apiKey` or `authToken` value. Add it to your CI so a change to your own code cannot bring the problem back. If it finds something, rotate the exposed secrets:
+
+- **API key:** revoke it on your [account page](/account) and create a new one, then update Strapi's Page Builder settings and your environment.
+- **Strapi token:** delete it in Settings > API Tokens and create a new one.
+
+## Strapi permissions
+
+- Anyone with **Access Page Builder** can open the editor. They can only list content of content types they may read in the Content Manager, and never users, admin or other system types.
+- Changing the **Page Builder settings** (API key, editor URL) needs the separate **Access the Page Builder settings** permission. Without it the API key is shown masked.
+- Editor tokens expire after 12 hours, and the licence server never returns the list of valid tokens to newer editors.
+
+## Reporting a vulnerability
+
+Please report security issues privately, using the Security tab of the [GitHub repository](https://github.com/wecre8websites/strapi-page-builder/security), rather than opening a public issue.

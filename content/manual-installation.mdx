@@ -7,6 +7,8 @@ export const metadata = {
 
 # Manual Installation
 
+**Requirements:** Strapi 5.31 or later, Node.js 20 to 24, and for Next.js, version 15.5 or 16.4 and later (Next.js 16.0 with Turbopack is not supported). Upgrading from 1.1? Read the [upgrade guide](/docs/upgrading) first.
+
 ## Sign up
 If you don't already have one, visit the [Strapi Page Builder sign-up page](/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
 
@@ -46,13 +48,14 @@ npm install @wecre8websites/strapi-page-builder-react
 
 Configure an environment variable called `PAGE_BUILDER_API_KEY` or similar and assign to it your Strapi Page Builder API key.
 
-IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
+IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised. Keep it server-side only (no `NEXT_PUBLIC_` prefix).
 
 ### Create a basic Strapi Page Builder config
 
 Create a new file called config.ts in a folder called `blocks` in your `src` directory and the following code:
 
 ```tsx filename="src/blocks/config.tsx" copy
+"use client";
 import { Config } from "@wecre8websites/strapi-page-builder-react";
  
 interface Blocks {
@@ -83,7 +86,7 @@ If using Next.js, create a new folder called `editor` in your `app` directory an
 import { Editor } from "@wecre8websites/strapi-page-builder-react";
 import "@wecre8websites/strapi-page-builder-react/editor.css"
 import { notFound } from "next/navigation";
-import config from "../../blocks/config";
+import { config } from "../../blocks/config";
 
 export default async function EditorPage({
   searchParams,
@@ -97,13 +100,28 @@ export default async function EditorPage({
       config={config}
       apiKey={process.env.PAGE_BUILDER_API_KEY as string}
       strapi={{
-        url: process.env.STRAPI_URL as string,
-        authToken: process.env.STRAPI_API_TOKEN as string,
-        imageUrl: process.env.STRAPI_IMAGE_URL as string,
+        url: process.env.NEXT_PUBLIC_API_URL as string,
+        authToken: process.env.STRAPI_ADMIN_TOKEN as string,
+        imageUrl: process.env.NEXT_PUBLIC_IMAGE_URL as string,
       }}
     />
   );
 }
+```
+
+This is a Next.js **Server Component**, and that matters. When it is imported in a Server Component, `Editor` keeps `apiKey` and `strapi.authToken` on the server and validates the editor token there, so neither secret is ever sent to a visitor's browser. Do not import `Editor` into a file marked `"use client"` or pass these values through your own client component: that sends them to the browser. See the [Security guide](/docs/security).
+
+Your config contains functions, so the file that defines it starts with `"use client"`. That lets a Server Component hand it to the editor.
+
+If your editor route does anything privileged of its own, such as enabling draft mode or loading private data, do it only after confirming the token. The `_pagebuilderToken` check above only tells you the parameter is present:
+
+```tsx filename="app/editor/page.tsx"
+import { validateEditorToken } from "@wecre8websites/strapi-page-builder-react/rsc";
+import { draftMode } from "next/headers";
+
+const check = await validateEditorToken(process.env.PAGE_BUILDER_API_KEY, _pagebuilderToken, process.env.SITE_ORIGIN); // e.g. "https://www.example.com"
+if (!check.ok) return notFound();
+(await draftMode()).enable();
 ```
 
 ### Allow the editor to be framed
@@ -139,16 +157,19 @@ headers: async () => [{
 }],
 ```
 
-`allowedParentOrigin` is optional. When set, the editor only sends messages to, and accepts messages from, that origin. The Strapi plugin always pins messages to the editor URL's origin.
+`allowedParentOrigin` is optional but recommended in production. When set, the editor only sends messages to, and accepts messages from, that origin; without it the editor still ignores any window other than its direct parent, and only a parent that holds a valid token can drive it. The Strapi plugin always pins its messages to the editor URL's origin.
 
 ### Add the render component
+
+`Render` can be used in a Server Component with your server-side `strapi` settings, including `authToken`. Page Builder keeps the token on the server and only allows the browser to look up documents that the page's own template already references. Never copy the token into a client component yourself.
+
 
 This example uses Next.js and assumes the Content-Type created in Strapi is called Homepage and is a Single type. Adapt as necessary for your configuration.
 
 ```tsx filename="app/page.tsx" copy
 import { Render } from "@wecre8websites/strapi-page-builder-react";
 import { notFound } from "next/navigation";
-import config from "../../blocks/config";
+import { config } from "../../blocks/config";
 
 export const revalidate = 60;
 

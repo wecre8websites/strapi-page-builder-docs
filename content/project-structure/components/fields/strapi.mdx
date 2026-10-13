@@ -42,13 +42,18 @@ export const MyComponentConfig: Omit<ComponentConfig<MyComponentProps, MyCompone
 
 This field allows the selection of a Strapi content entry as defined by the `contentType` field. For content-types that do not have a user-friendly title field defined, the optional `titleField` parameter can be used to specify the field to use as the title.
 
+## Permissions
+
+The editor only lists entries of content types that the editing user may read in the Strapi Content Manager. Give editors the **Read** permission on every content type used by a `strapi` field (Settings > Administration Panel > Roles), otherwise the picker shows an empty list. Users, admin and other sensitive system content types are never offered.
+
 ## Field Definition
 
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
-| `type` | `text` | true |
+| `type` | `strapi` | true |
 | `contentType` | The Strapi content type to use. | true |
-| `titleField` | The content field to use as the title. | false |
+| `titleField` | The content field to use as the title. It must be a public scalar field (text, number, date, etc.) of the content type; relations and private or password fields are ignored and the content type's main field is used instead. | false |
+| `pluralName` | The plural name used in the Strapi REST path. By default it is derived from the content type (`category` becomes `categories`, `box` becomes `boxes`, `product` becomes `products`). Set it for irregular plurals, such as `people`. | false |
 | `populate` | An array of strings to use as the populate query parameter. Defaults to `populate=*`. | false |
 | `label` | The label for the field in the editor. | false |
 

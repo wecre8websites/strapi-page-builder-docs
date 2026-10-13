@@ -1,0 +1,79 @@
+export const metadata = {
+  title: 'Migrating from DropZones to slots - Strapi Page Builder Docs',
+  description: 'Optional migration of existing templates from Puck DropZones to slot fields',
+}
+
+# Migrating from DropZones to slots
+
+Puck's `<DropZone>` is deprecated in favour of [slot fields](https://puckeditor.com/docs/guides/migrations/dropzones-to-slots), which store nested components inline, support `defaultProps` and `resolveData`, and render on the server. Existing DropZones keep working, so migrate when you are ready. New components should use slots.
+
+The migration has two parts: change your components, then convert the templates stored in Strapi.
+
+## 1. Change your components
+
+Replace each `<DropZone zone="name" />` with a slot field called `name`:
+
+```tsx filename="blocks/Columns/config.tsx"
+export const ColumnsConfig = {
+  fields: {
+    left: { type: "slot" },
+    right: { type: "slot" },
+  },
+  defaultProps: { left: [], right: [] },
+  render: ({ left: Left, right: Right }) => (
+    <div className="grid grid-cols-2">
+      <Left />
+      <Right />
+    </div>
+  ),
+}
+```
+
+A zone whose name is built from the component id, for example `` zone={`${id}-dropzone`} ``, is a *dynamic* zone. Give it any static slot name (for example `items`) and map it in step 3.
+
+## 2. Allow the migration on Strapi
+
+The migration reads and writes your templates through two API-token endpoints that are **off by default**. Turn them on for the duration of the migration only:
+
+```bash filename=".env"
+PAGE_BUILDER_SLOT_MIGRATION=true
+```
+
+Restart Strapi. While the setting is on, Strapi logs a warning at startup. The endpoints (`GET` and `PUT /api/page-builder/migration/templates`) answer `404` otherwise. Create a **Full access** API token in Settings > API Tokens to use for the run, and delete it afterwards.
+
+## 3. Run the migration
+
+From your web project:
+
+```bash copy
+# Preview. Nothing is written.
+npx strapi-page-builder-migrate-slots --url http://localhost:1337 --token $STRAPI_MIGRATION_TOKEN --dry-run
+
+# Migrate. A backup of every template is written first.
+npx strapi-page-builder-migrate-slots --url http://localhost:1337 --token $STRAPI_MIGRATION_TOKEN
+```
+
+- Zones whose name equals a slot field name migrate automatically.
+- **`--slot Component=field`** moves the dynamic zone of a component into `field`, for example `--slot TestimonialGrid=items`. Repeat the option for several components.
+- **`--map ./slot-map.mjs`** takes a module whose default export is Puck's `migrateDynamicZonesForComponent`, for components with several dynamic zones or custom shapes:
+
+  ```js filename="slot-map.mjs"
+  export default {
+    Columns: (props, zones) => ({ ...props, columns: Object.values(zones).map((zone) => ({ column: zone })) }),
+  }
+  ```
+- **`--backup file.json`** chooses where the backup goes (default: a timestamped file in the current folder).
+- Templates that cannot be migrated are listed with the reason and left untouched; a real run then exits with an error. A dynamic zone with no `--slot` rule is reported with the exact option to add.
+- It is safe to run again: templates without DropZones are skipped.
+
+The command does not need your block configuration; it only needs the slot field names to match the zone names (or your `--slot` / `--map` rules).
+
+## 4. Finish
+
+1. Remove `PAGE_BUILDER_SLOT_MIGRATION` from Strapi's environment and restart, then delete the API token.
+1. Open a few templates in the editor and check them. The backup file holds every template's original `json`, so you can restore any template from it; take a database backup before you start as well.
+
+## Notes
+
+- Root-level DropZones (`default-zone`) store their content in the template's `content` and are not migrated; use `children` in your root component if you want to drop DropZone entirely.
+- Localized templates are migrated one by one, per locale.

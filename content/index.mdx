@@ -40,7 +40,7 @@ Strapi Page Builder is a modular visual page editor for Strapi CMS for websites 
 
 Get up and running with Strapi Page Builder in just a few minutes.
 
-Strapi Page Builder was built and tested with [Strapi 5](https://strapi.io/five) and [Next.js 15](https://nextjs.org/).
+Strapi Page Builder works with [Strapi 5](https://strapi.io/five) (5.31 or later, tested up to 5.57) and [Next.js](https://nextjs.org/) 15.5 or 16.4 and later, on Node.js 20 to 24. Next.js 16.0 with Turbopack is not supported.
 
 ### Sign up
 If you don't already have one, visit the [Strapi Page Builder sign-up page](/account) to sign up for a free development account and get your API key; it will be needed in the next steps.
@@ -78,6 +78,8 @@ Set up a new Strapi environment using the preconfigured Strapi Page Builder temp
     </div>
   </Tabs.Tab>
 </Tabs>
+
+Installing the template prepares everything for a local demo: it generates a `.env` file with fresh random secrets (never overwriting an existing one), then loads the demo content and the security settings that let Strapi show your site in an iframe. This is for local demos only and never runs when `NODE_ENV=production`; set `SKIP_DEMO_SETUP=1` to skip it.
 
 Build, then run the Strapi development environment.
 
@@ -151,11 +153,18 @@ Set up a new Next.js 15 environment using the preconfigured Strapi Page Builder 
   </Tabs.Tab>
 </Tabs>
 
-Configure an environment variable called `PAGE_BUILDER_API_KEY` assign to it your Strapi Page Builder API key.
+Copy `.env.example` to `.env` and fill in the two secrets:
 
-Configure another one called `STRAPI_ADMIN_TOKEN` and assign to it the Read-Only API token created in the previous step.
+```bash filename=".env"
+# Your Strapi Page Builder API key
+PAGE_BUILDER_API_KEY=
+# The Read-Only API token created in the previous step
+STRAPI_ADMIN_TOKEN=
+NEXT_PUBLIC_API_URL=http://localhost:1337/api
+NEXT_PUBLIC_IMAGE_URL=http://localhost:1337
+```
 
-IMPORTANT: API keys must be handled securely as though they were passwords. You should never commit your API key to GitHub or any where else that it may become compromised.
+IMPORTANT: Treat both secrets like passwords and never commit them. They are server-only: do not give them a `NEXT_PUBLIC_` prefix. Strapi Page Builder 1.2 keeps them out of the pages it sends to the browser; see the [Security guide](/docs/security) to confirm that for your own site.
 
 Start the Next.js development server by running
 

@@ -6,7 +6,6 @@ export const metadata = {
 # `<Render />` Component
 
 ```tsx copy
-import strapiConfig from "@/config/strapiConfig";
 import { Render } from "@wecre8websites/strapi-page-builder-react";
 import { notFound } from "next/navigation";
 import config from "../../blocks/PageBuilderConfig";
@@ -50,6 +49,43 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 | Parameter | Description | Required |
 | ---       | ---         | ---      |
 | `url` | The URL of the Strapi API. | true |
-| `authToken` | The authentication token for Strapi if required. | false |
+| `authToken` | A Strapi API token (Read-Only is enough) used to load the content referenced by Strapi fields. Used on the server only. | false |
 | `imageUrl` | The URL of the image server. Required if using the `media` field type | false |
 | `locale` | The locale of the content if a multilanguage project. | false |
+
+## The token stays on the server
+
+When `<Render />` is used from a Server Component, as above, the `authToken` is never sent to the browser. The browser can only ask the server to load documents that the page's own template already references, nothing else. If you render inside a `"use client"` component, or in a client-only app, there is no server to hold the token: leave `authToken` out and resolve content on the server first (see below).
+
+## Server rendering
+
+For the fastest pages, resolve and render everything on the server with `resolveAllData` and `ServerRender` from the `/rsc` entry. No component code is sent to the browser for the page itself and the token is only used server-side.
+
+```tsx copy filename="app/[locale]/page.tsx"
+import { ServerRender, resolveAllData } from "@wecre8websites/strapi-page-builder-react/rsc";
+import { notFound } from "next/navigation";
+import { serverConfig } from "../../blocks/serverConfig";
+
+const strapi = {
+  url: process.env.NEXT_PUBLIC_API_URL as string,
+  authToken: process.env.STRAPI_ADMIN_TOKEN as string,
+  imageUrl: process.env.NEXT_PUBLIC_IMAGE_URL as string,
+}
+
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const { template, ...content } = await getCMSContent(locale)
+  if (!template?.json) return notFound();
+  const templateJson = await resolveAllData({ ...strapi, locale }, template.json, serverConfig, content)
+  return <ServerRender config={serverConfig} data={{ templateJson, content }} />
+}
+```
+
+`serverConfig` must be importable on the server, so its file must **not** start with `"use client"` (the components it renders can still be client components). Keep your editor config, which does start with `"use client"`, as a thin file that re-exports it:
+
+```tsx filename="blocks/PageBuilderConfig.tsx"
+"use client";
+export { serverConfig as default } from "./serverConfig";
+```
+
+Use [slot fields](/docs/configuration/slots-migration) to nest components: they render the same on the server and in the editor, and `<DropZone>` is deprecated.
