@@ -59,7 +59,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
         </>
         : <>
           <div className='flex gap-2 justify-end'>
-            {userDoc?.plan === "production" ? <a href="https://billing.stripe.com/p/login/eVa8AgbZD2ky9sk7ss" target="_blank" className='border rounded p-2'>Manage subscription</a> : null}
+            {userDoc?.plan === "production" && process.env.NEXT_PUBLIC_STRIPE_BILLING_PORTAL_URL ? <a href={process.env.NEXT_PUBLIC_STRIPE_BILLING_PORTAL_URL} target="_blank" rel="noreferrer" className='border rounded p-2'>Manage subscription</a> : null}
             <button type="button" onClick={signOut} className='border rounded p-2'>Sign out</button>
           </div>
           {user && userDoc?.plan !== "production" ?

@@ -57,7 +57,7 @@ const Account: FC<AccountProps> = ({ }) => {
               <span className="text-neutral-300">Signed in as {user?.email}</span>
               <div className="flex gap-2 justify-between items-center">
                 <Button onClick={() => signOut()}>Sign out</Button>
-                {userDoc?.plan === "production" ? <a href="https://billing.stripe.com/p/login/eVa8AgbZD2ky9sk7ss" target="_blank" className='border rounded p-2'>Manage subscription</a> : null}
+                {userDoc?.plan === "production" && process.env.NEXT_PUBLIC_STRIPE_BILLING_PORTAL_URL ? <a href={process.env.NEXT_PUBLIC_STRIPE_BILLING_PORTAL_URL} target="_blank" rel="noreferrer" className='border rounded p-2'>Manage subscription</a> : null}
               </div>
             </div>
             {accountError

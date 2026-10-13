@@ -32,6 +32,8 @@ declare global {
   }
 }
 
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
 export default async function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
     <html
@@ -43,13 +45,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       suppressHydrationWarning
     >
       <body>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-RGCKQ47K12" strategy="beforeInteractive" />
+        {gaMeasurementId ? <Script src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`} strategy="beforeInteractive" /> : null}
+        {/* gtag is always defined (consent banner and sign-in call it); it only reports when a measurement id is set */}
         <Script strategy='afterInteractive'>
           {`window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    gtag('config', 'G-RGCKQ47K12');
+    ${gaMeasurementId ? `gtag('config', ${JSON.stringify(gaMeasurementId)});` : ""}
   `}
         </Script>
         <AuthProvider>

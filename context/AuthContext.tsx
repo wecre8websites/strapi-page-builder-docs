@@ -40,8 +40,8 @@ enum AuthErrors {
 const GoogleProvider = new GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ context: "strapi-page-builder" });
 
-const LICENCE_SERVER = "https://licence.wc8.io/strapi-page-builder/auth"
-// const LICENCE_SERVER = `http://127.0.0.1:5001/licence-server-682e3/us-central1/routes/strapi-page-builder/auth`
+// Override to point the account page at a local or staging licence server
+const LICENCE_SERVER = process.env.NEXT_PUBLIC_LICENCE_SERVER_URL || "https://licence.wc8.io/strapi-page-builder/auth"
 
 
 export const AuthContext = createContext<AuthContextType>({

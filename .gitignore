@@ -43,3 +43,5 @@ public/_pagefind
 
 public/*.xml
 public/robots.txt
+# turborepo logs
+.turbo
