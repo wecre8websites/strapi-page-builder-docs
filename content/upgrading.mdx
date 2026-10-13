@@ -20,7 +20,7 @@ Version 1.2 of `@wecre8websites/strapi-page-builder-react` and the Strapi plugin
    ```bash copy
    npm install @wecre8websites/strapi-page-builder-react@latest
    ```
-1. Make sure your editor route and pages that use `<Render />` are **Server Components** (the default in the Next.js App Router) and that your Next.js version is 15.5, or 16.4 and later.
+1. Make sure your editor route and pages that use `<Render />` are **Server Components** (the default in the Next.js App Router) and that your Next.js version is 15.5, or 16.4 and later (or 16.0 to 16.3 with `--webpack`).
 1. Run the [secrets check](/docs/security#check-your-site) against your editor route and a public page.
 1. **Rotate your secrets** if you ever deployed 1.1.2 or earlier with a public editor route, or used `<Render strapi={{ authToken }} />` on a public page: revoke the API key on your [account page](/account), create a new Strapi API token, and update your environment.
 1. Optional but recommended: set `allowedParentOrigin` on `<Editor />` and send a `frame-ancestors` header ([details](/docs/security#protect-the-editor-route)).
@@ -58,4 +58,4 @@ Update the plugin and the React library together. Either order works, and the ne
 
 **Strapi fields show an empty list for some editors.** Give their role the Read permission on those content types.
 
-**The editor fails with "Server action not found" on Next.js 16.0.** Upgrade to Next.js 16.4 or later (or use Webpack).
+**The editor says "The editor's server action was not found" (the browser shows a 404 for the `/editor` request and Next.js logs "Failed to find Server Action").** Next.js 16.0 to 16.3 with Turbopack, the default bundler in Next.js 16, does not register server actions that live inside a package. Upgrade to Next.js 16.4 or later, or run `next dev --webpack` / `next build --webpack`.
