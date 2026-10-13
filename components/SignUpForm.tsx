@@ -19,6 +19,7 @@ import { Trash2 } from "lucide-react";
 import Script from 'next/script';
 import { FC, useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { KeyActionError, useKeyAction } from './KeyAction';
 
 declare namespace JSX {
   interface IntrinsicElements {
@@ -37,6 +38,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
   const { user, userDoc, signIn, signOut, createApiKey, revokeApiKey } = useContext(AuthContext);
   const [newKeyPopoverOpen, setNewKeyPopoverOpen] = useState(false);
   const [newKeyName, setNewKeyName] = useState("");
+  const { busy, error: actionError, run, clear: clearActionError } = useKeyAction();
 
   return (
     <div className='flex flex-col gap-4 w-full mb-6'>
@@ -80,6 +82,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
                 <Popover open={newKeyPopoverOpen} onOpenChange={(isOpen) => {
                   if (!isOpen) {
                     setNewKeyName("");
+                    clearActionError();
                   }
                 }}>
                   <PopoverTrigger onClick={() => setNewKeyPopoverOpen(true)}>Create an API Key</PopoverTrigger>
@@ -92,12 +95,10 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
                         <Input type="text" name="key_name" placeholder="Key name" value={newKeyName} onChange={(v) => setNewKeyName(v.currentTarget.value)} />
                         <Button
                           type="button"
-                          disabled={!newKeyName || !!userDoc?.keys?.find(k => k.name === newKeyName)}
-                          onClick={async () => {
-                            await createApiKey(newKeyName);
-                            setNewKeyPopoverOpen(false);
-                          }}>Create</Button>
+                          disabled={busy || !newKeyName.trim() || !!userDoc?.keys?.find(k => k.name === newKeyName.trim())}
+                          onClick={() => run(() => createApiKey(newKeyName), () => setNewKeyPopoverOpen(false))}>{busy ? "Creating…" : "Create"}</Button>
                       </div>
+                      <KeyActionError error={actionError} busy={busy} retry={() => run(() => createApiKey(newKeyName), () => setNewKeyPopoverOpen(false))} />
                     </div>
                   </PopoverContent>
                 </Popover>
@@ -118,11 +119,12 @@ export const SignUpForm: FC<SignUpFormProps> = ({ }) => {
                   <button type="button" onClick={() => {
                     const result = confirm(`Are you sure you want to revoke the key named ${key.name}?`);
                     if (result) {
-                      revokeApiKey(key.key)
+                      run(() => revokeApiKey(key.key), () => { });
                     }
                   }}>
                     <Trash2 size={16} />
                   </button>
+                  {actionError ? <KeyActionError error={actionError} busy={busy} retry={() => run(() => revokeApiKey(key.key), () => { })} /> : null}
                 </TableCell>
               </TableRow>))}
             </TableBody>

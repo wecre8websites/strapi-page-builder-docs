@@ -106,6 +106,41 @@ export default async function EditorPage({
 }
 ```
 
+### Allow the editor to be framed
+
+The editor runs in an iframe inside the Strapi admin, so two headers must agree.
+
+**Strapi** (`config/middlewares.ts`): add your site to `frame-src` in the `strapi::security` config, otherwise the admin refuses to load the editor.
+
+```ts filename="config/middlewares.ts" copy
+{
+  name: "strapi::security",
+  config: {
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "frame-src": ["'self'", "https://www.example.com"],
+      },
+    },
+  },
+},
+```
+
+**Your site**: restrict the editor route so only your Strapi admin can frame it, and pin the same origin on the editor.
+
+```tsx filename="app/editor/page.tsx"
+<Editor allowedParentOrigin="https://cms.example.com" /* ...other props */ />
+```
+
+```ts filename="next.config.ts"
+headers: async () => [{
+  source: "/editor",
+  headers: [{ key: "Content-Security-Policy", value: "frame-ancestors https://cms.example.com" }],
+}],
+```
+
+`allowedParentOrigin` is optional. When set, the editor only sends messages to, and accepts messages from, that origin. The Strapi plugin always pins messages to the editor URL's origin.
+
 ### Add the render component
 
 This example uses Next.js and assumes the Content-Type created in Strapi is called Homepage and is a Single type. Adapt as necessary for your configuration.

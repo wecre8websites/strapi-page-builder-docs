@@ -20,6 +20,7 @@ import { Trash2 } from "lucide-react";
 import Script from "next/script";
 import { FC, useContext, useState } from 'react';
 import Features, { FeaturesProps } from "../Features";
+import { KeyActionError, useKeyAction } from "../KeyAction";
 import LoginButton from "../LoginButton";
 
 type AccountProps = {}
@@ -41,10 +42,11 @@ const featuresProps: FeaturesProps = {
 }
 
 const Account: FC<AccountProps> = ({ }) => {
-  const { user, userDoc, signIn, signOut, createApiKey, revokeApiKey } = useContext(AuthContext);
+  const { user, userDoc, signIn, signOut, createApiKey, revokeApiKey, accountError, retryAccount } = useContext(AuthContext);
   const [newKeyPopoverOpen, setNewKeyPopoverOpen] = useState(false);
   const [newKeyName, setNewKeyName] = useState("");
   const [revokeKeyPopoverOpen, setRevokeKeyPopoverOpen] = useState("");
+  const { busy, error: actionError, run, clear: clearActionError } = useKeyAction();
 
   return (<section className="bg-neutral-900 text-white py-24 relative overflow-hidden min-h-screen" onClick={() => newKeyPopoverOpen ? setNewKeyPopoverOpen(false) : revokeKeyPopoverOpen ? setRevokeKeyPopoverOpen("") : null}>
     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,6 +60,12 @@ const Account: FC<AccountProps> = ({ }) => {
                 {userDoc?.plan === "production" ? <a href="https://billing.stripe.com/p/login/eVa8AgbZD2ky9sk7ss" target="_blank" className='border rounded p-2'>Manage subscription</a> : null}
               </div>
             </div>
+            {accountError
+              ? <div role="alert" className="mb-8 flex items-center justify-between gap-4 rounded border border-red-500/50 bg-red-950/40 p-4 text-red-200">
+                <span>{accountError} Check your connection and try again.</span>
+                <Button type="button" variant="outline" onClick={retryAccount}>Retry</Button>
+              </div>
+              : null}
             <div className="relative max-w-3xl mx-auto text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
                 API Keys
@@ -72,6 +80,7 @@ const Account: FC<AccountProps> = ({ }) => {
                   <Popover open={newKeyPopoverOpen} onOpenChange={(isOpen) => {
                     if (!isOpen) {
                       setNewKeyName("");
+                      clearActionError();
                     }
                   }}>
                     <PopoverTrigger onClick={() => setNewKeyPopoverOpen(true)}><div className="cursor-pointer inline-flex items-center justify-center px-6 py-2 border border-transparent text-lg font-medium rounded-md text-white bg-feature-500 hover:bg-feature-500/90 transition-all duration-300">Create an API Key</div></PopoverTrigger>
@@ -84,12 +93,10 @@ const Account: FC<AccountProps> = ({ }) => {
                           <Input type="text" name="key_name" placeholder="Key name" value={newKeyName} onChange={(v) => setNewKeyName(v.currentTarget.value)} />
                           <Button
                             type="button"
-                            disabled={!newKeyName || !!userDoc?.keys?.find(k => k.name === newKeyName)}
-                            onClick={async () => {
-                              await createApiKey(newKeyName);
-                              setNewKeyPopoverOpen(false);
-                            }}>Create</Button>
+                            disabled={busy || !newKeyName.trim() || !!userDoc?.keys?.find(k => k.name === newKeyName.trim())}
+                            onClick={() => run(() => createApiKey(newKeyName), () => setNewKeyPopoverOpen(false))}>{busy ? "Creating…" : "Create"}</Button>
                         </div>
+                        <KeyActionError error={actionError} busy={busy} retry={() => run(() => createApiKey(newKeyName), () => setNewKeyPopoverOpen(false))} />
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -108,7 +115,7 @@ const Account: FC<AccountProps> = ({ }) => {
                   <TableCell>{key.key}</TableCell>
                   <TableCell className='text-center'>
                     <Popover open={revokeKeyPopoverOpen === key.key}>
-                      <PopoverTrigger onClick={() => setRevokeKeyPopoverOpen(key.key)}><Trash2 size={16} /></PopoverTrigger>
+                      <PopoverTrigger onClick={() => { clearActionError(); setRevokeKeyPopoverOpen(key.key); }}><Trash2 size={16} /></PopoverTrigger>
                       <PopoverContent className="w-80" onClick={(e) => e.stopPropagation()}>
                         <div className="grid gap-4">
                           <div className="space-y-2">
@@ -120,17 +127,14 @@ const Account: FC<AccountProps> = ({ }) => {
                             <Button
                               type="button"
                               variant="outline"
-                              onClick={async () => {
-                                setRevokeKeyPopoverOpen("");
-                              }}>Cancel</Button>
+                              onClick={() => { clearActionError(); setRevokeKeyPopoverOpen(""); }}>Cancel</Button>
                             <Button
                               type="button"
                               variant={"destructive"}
-                              onClick={async () => {
-                                await revokeApiKey(key.key)
-                                setRevokeKeyPopoverOpen("");
-                              }}>Revoke</Button>
+                              disabled={busy}
+                              onClick={() => run(() => revokeApiKey(key.key), () => setRevokeKeyPopoverOpen(""))}>{busy ? "Revoking…" : "Revoke"}</Button>
                           </div>
+                          <KeyActionError error={actionError} busy={busy} retry={() => run(() => revokeApiKey(key.key), () => setRevokeKeyPopoverOpen(""))} />
                         </div>
                       </PopoverContent>
                     </Popover>
