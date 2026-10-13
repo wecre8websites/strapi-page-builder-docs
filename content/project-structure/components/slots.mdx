@@ -1,0 +1,114 @@
+export const metadata = {
+  title: 'Slots - Strapi Page Builder Docs',
+  description: 'Let editors drop other components inside a component with slot fields',
+}
+
+# Slots
+
+A **slot** is a field that holds other components. Use one whenever a component should contain content that editors add, remove and reorder themselves: a grid of cards, a set of columns, tabs, an accordion. Editors drag components straight into the slot in the preview.
+
+Slots replace `<DropZone>`, which is deprecated. They store their content inside the component's own data, work with `defaultProps`, `resolveData` and localized templates, and render the same in the editor, in `<Render />` and on the server with `ServerRender`. To convert an existing project see [DropZones to slots](/docs/configuration/slots-migration).
+
+## Adding a slot to a component
+
+Declare the field with `type: "slot"` and render it. The value your component receives is a component, so you render it like any other (`<Items />`).
+
+```tsx filename="src/blocks/TestimonialGrid/component.tsx" copy
+import { DefaultComponentProps, Slot, SlotComponent } from "@wecre8websites/strapi-page-builder-react";
+import { FC } from "react";
+
+// The stored value of the field: what is saved in the template
+export interface TestimonialGridProps extends DefaultComponentProps {
+  heading?: string;
+  items: Slot;
+}
+
+// What your render function receives: the slot arrives as a component
+export type TestimonialGridComponentProps = Omit<TestimonialGridProps, "items"> & { items: SlotComponent };
+
+export const TestimonialGridComponent: FC<TestimonialGridComponentProps> = ({ id, heading, items: Items }) => (
+  <section id={id}>
+    <h2>{heading}</h2>
+    <Items className="grid grid-cols-1 md:grid-cols-3 gap-8" allow={["TestimonialItem"]} />
+  </section>
+);
+```
+
+```tsx filename="src/blocks/TestimonialGrid/config.tsx" copy
+import { ComponentConfig } from "@wecre8websites/strapi-page-builder-react";
+import { TestimonialGridComponent, TestimonialGridProps } from "./component";
+
+export const TestimonialGridConfig: ComponentConfig<TestimonialGridProps> = {
+  fields: {
+    heading: { type: "text", label: "Heading" },
+    items: { type: "slot", allow: ["TestimonialItem"] },
+  },
+  defaultProps: {
+    heading: "What Our Customers Say",
+    items: [], // start empty, or pre-fill with components: [{ type: "TestimonialItem", props: { id: "..." } }]
+  },
+  label: "Testimonial Container",
+  render: (data) => <TestimonialGridComponent {...data} />,
+}
+```
+
+`TestimonialItem` is a normal component registered in your config. Because the slot is declared with `allow`, editors can only drop that component into it.
+
+## Field definition
+
+| Parameter | Description | Required |
+| ---       | ---         | ---      |
+| `type` | `slot` | true |
+| `allow` | The component names that can be dropped into the slot. Everything is allowed when omitted. | false |
+| `disallow` | Component names that cannot be dropped into the slot. | false |
+
+## Rendering options
+
+The slot component accepts these props, so you control the layout of the area:
+
+| Parameter | Description |
+| ---       | ---         |
+| `className` | A class for the element that wraps the slot's components. |
+| `style` | Inline styles for that element. |
+| `allow` / `disallow` | Limit what can be dropped for this render, in addition to the field definition. |
+| `minEmptyHeight` | The height of the drop area while the slot is empty, in pixels or any CSS unit. |
+| `collisionAxis` | `x`, `y` or `dynamic`: the direction components are laid out in, which helps drag and drop in grids and rows. |
+
+A component can have any number of slots, and the components inside a slot can have slots of their own.
+
+## The page root
+
+The root component does not need a drop zone. Render the `children` it receives where the page content should go:
+
+```tsx filename="src/blocks/Root/component.tsx"
+export const RootComponent = ({ children, siteName }) => (
+  <div>
+    <Header siteName={siteName} />
+    <main>{children}</main>
+    <Footer />
+  </div>
+);
+```
+
+## Slots and server rendering
+
+With `<Render />`, and in the editor, slots can be used anywhere. When you render on the server with `ServerRender`, render the slot in a **Server Component** (a component file without `"use client"`): a slot is a function that only the server can create, so it cannot be passed as a prop to a Client Component. If you need client behaviour around a slot, keep the slot in a server component and put the client component around or beside it:
+
+```tsx
+// Server Component: renders the slot and wraps it with a client component
+export const TabsComponent = ({ items: Items }) => (
+  <TabsShell>        {/* "use client": receives the rendered slot as children */}
+    <Items />
+  </TabsShell>
+);
+```
+
+See [Server rendering](/docs/project-structure/render#server-rendering).
+
+## Localized templates
+
+When [Enforce template shape](/docs/configuration/plugin-settings) is on, a localized template keeps the same components, in the same order, in every slot as the original-language template, and only their content can differ.
+
+## Migrating from DropZones
+
+Existing templates that use `<DropZone>` keep working. To move them to slots, change your components as above and run the migration command described in [DropZones to slots](/docs/configuration/slots-migration); it converts the templates stored in Strapi and keeps a backup.
