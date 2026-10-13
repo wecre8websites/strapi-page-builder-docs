@@ -90,7 +90,17 @@ export { serverConfig as default } from "./serverConfig";
 
 ### Server rendering tips
 
-- **Client components and the `puck` prop.** Puck gives every component a `puck` prop that contains functions (`renderDropZone`). Functions cannot be passed to a Client Component, so remove it before spreading props into one: `<Hero {...cleanProps(data)} />`, where `cleanProps` is `({ puck, ...rest }) => ({ ...rest, puck: { ...puck, renderDropZone: undefined } })`. Slot components can only be rendered by Server Components.
+- **Client components and the `puck` prop.** Puck gives every component a `puck` prop that contains functions (`renderDropZone`). Functions cannot be passed to a Client Component, so remove them before spreading props into one: `<Hero {...cleanProps(data)} />`. Only the functions are removed; everything else in `puck`, including `metadata` (the content your blocks receive from the page), is kept untouched:
+
+  ```ts filename="lib/cleanProps.ts"
+  const cleanProps = <T,>(props: T): T => {
+    const puck = (props as any)?.puck;
+    if (!puck) return props;
+    return { ...props, puck: Object.fromEntries(Object.entries(puck).filter(([, value]) => typeof value !== "function")) };
+  };
+  ```
+
+  Slot components can only be rendered by Server Components.
 - **Hydration.** Pages are now HTML first, then hydrated, so anything that differs between the server and the browser (`Math.random()`, `Date.now()`, locale-dependent dates) shows a hydration error. Derive such values from the data instead.
 - **Helpers on the server.** `processProps` and `walkTree` imported from the main entry can be called in Server Components.
 
