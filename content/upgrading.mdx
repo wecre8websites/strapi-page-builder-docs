@@ -41,7 +41,8 @@ Update the plugin and the React library together. Either order works, and the ne
 - Content types with irregular plurals (`category`) are looked up correctly; set `pluralName` for unusual ones.
 - The editor no longer asks to discard unsaved changes right after loading.
 - `ServerRender` with `richtext` fields. Puck 0.21 added its own `richtext` field type, which clashed with Page Builder's rich text (a Strapi blocks array) when rendering on the server: blocks received a React element instead of their content and development builds crashed. Page Builder's rich text now renders unchanged.
-- Template, content and duplicate-template pickers are searchable and no longer empty each other.
+- Template, content and duplicate-template pickers are searchable and no longer empty each other, and the Preview content picker shows the title of the entry that is open.
+- Following a link in the editor preview no longer takes the editor over: external links are ignored and internal links can open the matching entry ([`resolveLink`](/docs/project-structure/editor#links-in-the-preview)).
 
 ### Dependencies
 - The editor engine is now [Puck](https://puckeditor.com) 0.23 under its new package name, `@puckeditor/core` (it was `@measured/puck`). If your own code imports from `@measured/puck`, change the import. Everything you import from `@wecre8websites/strapi-page-builder-react` is unchanged. The editor shows a new Blocks/Outline rail on the left.

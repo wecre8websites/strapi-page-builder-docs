@@ -41,6 +41,7 @@ export default async function EditorPage({ searchParams }: { searchParams: Promi
 | `allowedParentOrigin` | The origin of your Strapi admin, e.g. `https://cms.example.com`. When set, the editor only talks to that origin. Recommended in production, together with a `frame-ancestors` header. See [Security](/docs/security). | false |
 | `contentKey` | If set, the entry being edited is exposed to components as `metadata[contentKey]` instead of at the top level. | false |
 | `additionalContent` | Extra data merged into the content available to components (for example a dictionary or navigation). Kept on the server until the editor token is validated. | false |
+| `resolveLink` | A [Server Action](https://nextjs.org/docs/app/getting-started/updating-data) `(path, locale) => { contentType, contentId, templateId?, locale? } \| null`. Called when a link is followed in the preview; return the Strapi entry that page is built from and the editor opens it. See [Links in the preview](#links-in-the-preview). | false |
 | `fetch` | A [Server Action](https://nextjs.org/docs/app/getting-started/updating-data) `(contentId) => content` used to load the entry yourself instead of using the data from Strapi. Its id is public, so it must check permissions itself. | false |
 
 ### Strapi Configuration Object
@@ -54,3 +55,29 @@ export default async function EditorPage({ searchParams }: { searchParams: Promi
 - The editor token that Strapi puts in the iframe URL is checked on the server, with your API key, before any content is shown. Invalid, expired or missing tokens show an error and nothing else.
 - Content lookups made while editing go through a server action that needs the validated session, so the Strapi token is never used by the browser.
 - The editor ignores messages from any window except its direct parent, and only after validation.
+
+## Links in the preview
+
+Links inside the editor preview never navigate the editor away from your Strapi admin:
+
+- **External links** (other sites, `mailto:`, `tel:`) do nothing, whichever way they are opened (click, ctrl/cmd-click, middle-click).
+- **In-page anchors** (`#section`) scroll the preview to the target.
+- **Internal links** (same site) do nothing unless you provide `resolveLink`. With it, the editor asks your site which Strapi entry the path belongs to and opens that entry, updating the address of the Strapi admin page so you can bookmark or reload it. If you have unsaved changes the editor asks before leaving.
+
+```tsx filename="app/editor/page.tsx"
+async function resolveLink(path: string, locale?: string) {
+  "use server";
+  const entry = await findEntryByPath(path); // your own lookup
+  if (!entry) return null; // unknown paths are ignored
+  return {
+    contentType: "api::page.page", // the content type's uid
+    contentId: entry.documentId,
+    templateId: entry.template?.documentId, // recommended: the template the entry uses
+    locale: entry.locale,
+  };
+}
+
+<Editor config={config} apiKey={...} strapi={...} resolveLink={resolveLink} />
+```
+
+Like the `fetch` prop, a Server Action's id is public, so `resolveLink` should only return what the editor is allowed to open.
