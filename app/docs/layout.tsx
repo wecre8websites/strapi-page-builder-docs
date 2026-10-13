@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 }
 
-const banner = <Banner storageKey="some-key">Strapi Page Builder 1.0 is now available 🎉</Banner>
+const banner = <Banner storageKey="some-key">Strapi Page Builder 1.2 is now available 🎉</Banner>
 const navbar = (
   <Navbar
     className="bg-white dark:bg-neutral-900"
