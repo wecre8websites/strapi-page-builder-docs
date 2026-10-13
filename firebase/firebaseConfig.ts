@@ -1,21 +1,22 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Read from the environment (see .env.example). Next.js only inlines NEXT_PUBLIC_ variables that are referenced literally.
 const firebaseConfig = {
-  apiKey: "REDACTED_FIREBASE_API_KEY",
-  authDomain: "licence-server-682e3.firebaseapp.com",
-  projectId: "licence-server-682e3",
-  storageBucket: "licence-server-682e3.firebasestorage.app",
-  messagingSenderId: "REDACTED_FIREBASE_MESSAGING_SENDER_ID",
-  appId: "1:REDACTED_FIREBASE_MESSAGING_SENDER_ID:web:REDACTED_FIREBASE_APP_HASH"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
+const missing = Object.entries(firebaseConfig).filter(([, value]) => !value).map(([key]) => key);
+if (missing.length) {
+  throw new Error(`Missing Firebase settings (${missing.join(", ")}). Copy .env.example to .env.local and fill in the NEXT_PUBLIC_FIREBASE_* values.`);
+}
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
