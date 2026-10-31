@@ -103,6 +103,7 @@ export { serverConfig as default } from "./serverConfig";
   Slot components can only be rendered by Server Components.
 - **Hydration.** Pages are now HTML first, then hydrated, so anything that differs between the server and the browser (`Math.random()`, `Date.now()`, locale-dependent dates) shows a hydration error. Derive such values from the data instead.
 - **Helpers on the server.** `processProps` and `walkTree` imported from the main entry can be called in Server Components.
+- **Keep the editor out of public bundles.** Since 1.2.1 the package is marked side-effect free, so importing `processProps` from `/rsc` in a Client Component no longer ships the editor library (`@puckeditor/core`) to visitors. A bundler that ignores `sideEffects` can import `processProps` from `@wecre8websites/strapi-page-builder-react/process` instead, which never touches the editor.
 
 ### DropZones and ServerRender
 
